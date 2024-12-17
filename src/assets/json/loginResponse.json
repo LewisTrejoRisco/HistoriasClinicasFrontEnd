@@ -1,0 +1,13 @@
+{
+    "mensajeAviso": "OK",
+    "mensajeError": null,
+    "contadorsolitudespendientes": 0,
+	"area": "Sis",
+	"descripcionArea": "Sistemas",
+	"puesto": "Analista",
+	"fechaingreso": "20231211",
+	"periodoVacacional-periodoUnico": "2023",
+	"codigoUsuario": "E003620",
+	"nombreCompleto": "Lewis Trejo",
+	"foto": "assets/img/portrait/small/avatar-s-1.png"
+}

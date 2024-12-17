@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title"> Agregar Vacuna </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    x
+  </button>
+</div>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tdescvacu.invalid || lf.tdescvacu.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spanCantCont">Vacuna</span>
+            <input type="text" [formControl]="myForm.controls['tdescvacu']" formControlName="tdescvacu" class="form-control"
+            id="tdescvacu" placeholder="Vacuna" (keydown.enter)="$event.preventDefault()" #tdescvacu>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.ttotanumedosi.invalid || lf.ttotanumedosi.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spanCantCont">Total cantidad dosis</span>
+            <input type="text" [formControl]="myForm.controls['ttotanumedosi']" formControlName="ttotanumedosi" class="form-control"
+            id="ttotanumedosi" placeholder="Vacuna" (keydown.enter)="$event.preventDefault()" #ttotanumedosi>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer taskboard-modal-footer">
+    <button class="btn btn-secondary btn-save">
+      Agregar
+    </button>
+  </div>
+</form>

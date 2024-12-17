@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+.selected-usernet {
+    background-color: #cec8f5!important;
+    border-right: 3px solid #975AFF!important;
+}
+.heightScroll {
+    height: calc(100vh - 300px);
+}
+/* .tabla-de-datos {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 300px !important; Ajusta la altura según sea necesario
+  } */
+  
+/* Hacer las columnas receptivas */
+/* .ngx-datatable .datatable-header .datatable-header-cell,
+.ngx-datatable .datatable-body .datatable-body-cell {
+    flex: 1;
+} */

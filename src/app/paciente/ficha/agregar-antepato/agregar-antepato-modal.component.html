@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h4 class="modal-title"> {{ id != 0 ? 'Actualizar Antecedente Patológico' : 'Agregar Antecedente Patológico'}} </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    x
+  </button>
+</div>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="listantepato" 
+                        (keyup)="onKeyAntePato($event)" 
+                        [formControl]="myForm.controls['tdescantepato']" 
+                        bindLabel="tdescantepato" 
+                        formControlName="tdescantepato" 
+                        placeholder="Buscar Antecedente" 
+                        id="tdescantepato"
+                        [addTag]="addTagFn.bind(this)">
+                          <ng-template ng-option-tmp let-item="item" let-index="index">
+                            {{item.idantepato}} - {{item.tdescantepato}}
+                          </ng-template>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="control" [formControl]="myForm.controls['tflagcontrol']" bindLabel="name" formControlName="tflagcontrol" placeholder="¿Esta controlado?" id="tflagcontrol">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <input type="text" [formControl]="myForm.controls['tfechulticont']" readonly formControlName="tfechulticont" class="form-control"
+              id="tfechulticont" placeholder="Último control" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
+            <div class="input-group-append">
+              <div class="input-group-text" (click)="d2.toggle()">
+                <i class="fa fa-calendar" style="cursor: pointer;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spanCantCont"># Control</span>
+            <input type="number" [formControl]="myForm.controls['tcanttotacont']" formControlName="tcanttotacont" class="form-control"
+            id="tcanttotacont" placeholder="cantidad" (keydown.enter)="$event.preventDefault()" #tcanttotacont>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spantobservacion">Observación</span>
+            <input type="text" [formControl]="myForm.controls['tobservacion']" formControlName="tobservacion" class="form-control"
+            id="tobservacion" name="tobservacion" placeholder="Observación" (keydown.enter)="$event.preventDefault()" #tobservacion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer taskboard-modal-footer">
+    <button class="btn btn-secondary btn-save">
+      {{ id != 0 ? 'Actualizar' : 'Agregar'}}
+    </button>
+  </div>
+</form>

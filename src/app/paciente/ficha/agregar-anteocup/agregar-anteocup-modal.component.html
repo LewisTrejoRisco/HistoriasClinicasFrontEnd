@@ -1,0 +1,185 @@
+<div class="modal-header">
+  <h4 class="modal-title"> {{ id != 0 ? 'Actualizar EMO' : 'Agregar EMO'}} </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    x
+  </button>
+</div>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tfechinic.invalid || lf.tfechinic.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spanttfechinic">Fecha EMO Vigente</span>
+              <input type="text" [formControl]="myForm.controls['tfechinic']" readonly formControlName="tfechinic" class="form-control"
+                id="tfechinic" placeholder="Fecha control" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
+              <div class="input-group-append">
+                <div class="input-group-text" (click)="d2.toggle()">
+                  <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spanttfechinic">Programación EMO</span>
+              <input type="text" [formControl]="myForm.controls['tfechrese']" readonly formControlName="tfechrese" class="form-control"
+                id="tfechrese" placeholder="Fecha programación EMO" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d3="ngbDatepicker" >
+              <div class="input-group-append">
+                <div class="input-group-text" (click)="d3.toggle()">
+                  <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tcantanua.invalid || lf.tcantanua.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+              <span class="input-group-text" id="spanCantCont"># veces al año</span>
+              <input type="number" [formControl]="myForm.controls['tcantanua']" formControlName="tcantanua" class="form-control"
+              id="tcantanua" placeholder="# veces al año" (keydown.enter)="$event.preventDefault()" #tcantanua>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.idaptitudemo.invalid || lf.idaptitudemo.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="listaptitud" 
+                        bindLabel="tdescaptitudemo" 
+                        bindValue="idaptitudemo"
+                        formControlName="idaptitudemo" 
+                        placeholder="Aptitud" 
+                        (change)="changeApti($event)"
+                        id="idaptitudemo"
+                        name="idaptitudemo">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="aptitud == 2 || aptitud == 3">
+        <div *ngIf="modalFormSubmitted && (lf.tnombespe.invalid || lf.tnombespe.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="listespecialidad" 
+                        (keyup)="onKeyEspecialidad($event)" 
+                        [formControl]="myForm.controls['tnombespe']" 
+                        bindLabel="tnombespe" 
+                        formControlName="tnombespe" 
+                        placeholder="Buscar especialidad" 
+                        id="tnombespe"
+                        name="tnombespe"
+                        [addTag]="addTagFnEspe.bind(this)">
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          {{item.idespecialidad}} - {{item.tnombespe}}
+                        </ng-template>
+                </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="aptitud == 2 || aptitud == 3">
+        <div *ngIf="modalFormSubmitted && (lf.tnombrest.invalid || lf.tnombrest.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="listrestriccion" 
+                        (keyup)="onKeyRestriccion($event)" 
+                        [formControl]="myForm.controls['tnombrest']" 
+                        bindLabel="tnombrest" 
+                        formControlName="tnombrest" 
+                        placeholder="Buscar restricción" 
+                        id="tnombrest"
+                        name="tnombrest"
+                        [addTag]="addTagFnRest.bind(this)">
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          {{item.idrestriccion}} - {{item.tnombrest}}
+                        </ng-template>
+                </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="aptitud == 3">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+              <input type="text" 
+                     [formControl]="myForm.controls['tfechalimite']" 
+                     readonly 
+                     formControlName="tfechalimite" 
+                     class="form-control"
+                     id="tfechalimite" 
+                     name="tfechalimite" 
+                     placeholder="Fecha límite" 
+                     (keydown.enter)="$event.preventDefault()" 
+                     ngbDatepicker #d2="ngbDatepicker" >
+              <div class="input-group-append">
+                <div class="input-group-text" (click)="d2.toggle()">
+                  <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="aptitud == 3">
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <!-- <span class="input-group-text" id="spanCont">Controlado</span> -->
+            <ng-select  [items]="control" 
+                        [formControl]="myForm.controls['tstatus']" 
+                        bindLabel="tstatusdesc" 
+                        formControlName="tstatus" 
+                        placeholder="¿Está levantado?" 
+                        id="tstatus"
+                        name="tstatus">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-text" id="spantdescemo">Detalle</span>
+            <input type="text" [formControl]="myForm.controls['tdescemo']" formControlName="tdescemo" class="form-control"
+            id="tdescemo" name="tdescemo" placeholder="Escribir detalle" (keydown.enter)="$event.preventDefault()" #tdescemo>
+          </div>
+        </div>
+      </div>
+
+
+      <button type="button" class="btn btn-secondary mr-2 mb-1" onclick="document.getElementById('formFileSm').click()"><i class="fa fa-file-o mr-1"></i>PDF Aptitud</button>
+      <button type="button" class="btn btn-secondary mr-2 mb-1" onclick="document.getElementById('formFileInf').click()"><i class="fa fa-file-o mr-1"></i>PDF Informe</button>
+      <!-- <button type="button" class="btn btn-secondary mr-2 mb-1" onclick="document.getElementById('idFoto').click()"><i class="fa fa-camera mr-1"></i>Foto</button> -->
+      <input class="form-control" id="formFileSm" type="file" multiple accept="pdf/*" (change)="imageUpload($event)" style="display: none;">
+      <input class="form-control" id="formFileInf" type="file" multiple accept="pdf/*" (change)="imageUploadInf($event)" style="display: none;">
+      <!-- <input type="file" accept="image/*" capture="camera" id="idFoto" (change)="imageUpload($event)" style="display: none;"> -->
+      <div class="col" *ngIf="profileImage">
+        <a download='documento' [href]=profileImage ><i class="ft-download mr-1"></i>Descargar documento aptitud</a>
+      </div>
+      <div class="col" *ngIf="profileImageInf">
+        <a download='documentoinf' [href]=profileImageInf ><i class="ft-download mr-1"></i>Descargar resumen informe</a>
+      </div>
+      <div class="form-group" *ngIf="aptitud == 1 || aptitud == 2 ">
+        <div class="checkbox auth-checkbox  ">
+          <input type="checkbox" id="tflagentrresu" name="tflagentrresu" [formControl]="myForm.controls['tflagentrresu']" formControlName="tflagentrresu" class="form-control">
+          <label for="tflagentrresu"><span class="font-small-2 mb-3 font-weight-normal">¿Se entregó resultado?</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer taskboard-modal-footer">
+    <button class="btn btn-secondary btn-save">
+      {{ id != 0 ? 'Actualizar' : 'Agregar'}}
+    </button>
+  </div>
+</form>

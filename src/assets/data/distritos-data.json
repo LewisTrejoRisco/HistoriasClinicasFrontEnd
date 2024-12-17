@@ -1,0 +1,198 @@
+[
+    {
+        "id_distrito": 2,
+        "descripcion_distrito": "Ancon"
+    },
+    {
+        "id_distrito": 3,
+        "descripcion_distrito": "Ate"
+    },
+    {
+        "id_distrito": 31,
+        "descripcion_distrito": "Barranco"
+    },
+    {
+        "id_distrito": 51,
+        "descripcion_distrito": "Bellavista"
+    },
+    {
+        "id_distrito": 4,
+        "descripcion_distrito": "Brena"
+    },
+    {
+        "id_distrito": 50,
+        "descripcion_distrito": "Callao"
+    },
+    {
+        "id_distrito": 5,
+        "descripcion_distrito": "Carabayllo"
+    },
+    {
+        "id_distrito": 53,
+        "descripcion_distrito": "Carmen De La Legua-Reynoso"
+    },
+    {
+        "id_distrito": 13,
+        "descripcion_distrito": "Chaclacayo"
+    },
+    {
+        "id_distrito": 14,
+        "descripcion_distrito": "Chorrillos"
+    },
+    {
+        "id_distrito": 45,
+        "descripcion_distrito": "Cieneguilla"
+    },
+    {
+        "id_distrito": 6,
+        "descripcion_distrito": "Comas"
+    },
+    {
+        "id_distrito": 41,
+        "descripcion_distrito": "El Agustino"
+    },
+    {
+        "id_distrito": 40,
+        "descripcion_distrito": "Independencia"
+    },
+    {
+        "id_distrito": 39,
+        "descripcion_distrito": "Jesus Maria"
+    },
+    {
+        "id_distrito": 16,
+        "descripcion_distrito": "La Molina"
+    },
+    {
+        "id_distrito": 54,
+        "descripcion_distrito": "La Perla"
+    },
+    {
+        "id_distrito": 52,
+        "descripcion_distrito": "La Punta"
+    },
+    {
+        "id_distrito": 15,
+        "descripcion_distrito": "La Victoria"
+    },
+    {
+        "id_distrito": 1,
+        "descripcion_distrito": "Lima"
+    },
+    {
+        "id_distrito": 17,
+        "descripcion_distrito": "Lince"
+    },
+    {
+        "id_distrito": 48,
+        "descripcion_distrito": "Los Olivos"
+    },
+    {
+        "id_distrito": 18,
+        "descripcion_distrito": "Lurigancho"
+    },
+    {
+        "id_distrito": 19,
+        "descripcion_distrito": "Lurin"
+    },
+    {
+        "id_distrito": 20,
+        "descripcion_distrito": "Magdalena Del Mar"
+    },
+    {
+        "id_distrito": 21,
+        "descripcion_distrito": "Miraflores"
+    },
+    {
+        "id_distrito": 22,
+        "descripcion_distrito": "Pachacamac"
+    },
+    {
+        "id_distrito": 24,
+        "descripcion_distrito": "Pucusana"
+    },
+    {
+        "id_distrito": 23,
+        "descripcion_distrito": "Pueblo Libre"
+    },
+    {
+        "id_distrito": 25,
+        "descripcion_distrito": "Puente Piedra"
+    },
+    {
+        "id_distrito": 26,
+        "descripcion_distrito": "Punta Hermosa"
+    },
+    {
+        "id_distrito": 27,
+        "descripcion_distrito": "Punta Negra"
+    },
+    {
+        "id_distrito": 28,
+        "descripcion_distrito": "Rimac"
+    },
+    {
+        "id_distrito": 29,
+        "descripcion_distrito": "San Bartolo"
+    },
+    {
+        "id_distrito": 46,
+        "descripcion_distrito": "San Borja"
+    },
+    {
+        "id_distrito": 30,
+        "descripcion_distrito": "San Isidro"
+    },
+    {
+        "id_distrito": 43,
+        "descripcion_distrito": "San Juan De Lurigancho"
+    },
+    {
+        "id_distrito": 42,
+        "descripcion_distrito": "San Juan De Miraflores"
+    },
+    {
+        "id_distrito": 44,
+        "descripcion_distrito": "San Luis"
+    },
+    {
+        "id_distrito": 32,
+        "descripcion_distrito": "San Martin De Porres"
+    },
+    {
+        "id_distrito": 33,
+        "descripcion_distrito": "San Miguel"
+    },
+    {
+        "id_distrito": 49,
+        "descripcion_distrito": "Santa Anita"
+    },
+    {
+        "id_distrito": 35,
+        "descripcion_distrito": "Santa Rosa"
+    },
+    {
+        "id_distrito": 36,
+        "descripcion_distrito": "Santiago De Surco"
+    },
+    {
+        "id_distrito": 34,
+        "descripcion_distrito": "Sta Maria Del Mar"
+    },
+    {
+        "id_distrito": 37,
+        "descripcion_distrito": "Surquillo"
+    },
+    {
+        "id_distrito": 55,
+        "descripcion_distrito": "Ventanilla"
+    },
+    {
+        "id_distrito": 47,
+        "descripcion_distrito": "Villa El Salvador"
+    },
+    {
+        "id_distrito": 38,
+        "descripcion_distrito": "Villa Maria Del Triunfo"
+    }
+]

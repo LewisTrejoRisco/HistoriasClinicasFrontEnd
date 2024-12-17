@@ -1,0 +1,159 @@
+<ng-template #modalRegistrar let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ modalDataRese?.titulo }}</h5>
+        <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <form #companiaForm="ngForm" (ngSubmit)="registrar(companiaForm)">
+        <div class="modal-body">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div *ngIf="flagformtransaccion && !modalDataRese?.transaccion.tdiagnostico" 
+                            class="help-block mt-1 text-danger"> 
+                            <i class="ft-alert-circle align-middle"></i> Diagnóstico es requerido
+                            </div>
+                            <div class="input-group">
+                            <span class="input-group-text" >Diagnóstico</span>
+                            <input type="text" 
+                                    class="form-control" 
+                                    id="tdiagnostico"
+                                    name="tdiagnostico"
+                                    [(ngModel)]="modalDataRese?.transaccion.tdiagnostico"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div *ngIf="flagformtransaccion && !modalDataRese?.transaccion.tdescatenmedi" 
+                            class="help-block mt-1 text-danger"> 
+                            <i class="ft-alert-circle align-middle"></i> Descripcion es requerido
+                            </div>
+                            <div class="input-group">
+                            <span class="input-group-text" >Descripción</span>
+                            <input type="text" 
+                                    class="form-control" 
+                                    id="tdescatenmedi"
+                                    name="tdescatenmedi"
+                                    [(ngModel)]="modalDataRese?.transaccion.tdescatenmedi"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group">
+                            <span class="input-group-text" >Descanso médico</span>
+                            <input type="number" 
+                                    class="form-control" 
+                                    id="tdescmedi"
+                                    name="tdescmedi"
+                                    [(ngModel)]="modalDataRese?.transaccion.tdescmedi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer taskboard-modal-footer">
+        <button class="btn btn-outline-secondary" >{{ modalDataRese?.action }}</button>
+        </div>
+    </form>
+</ng-template>
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body font-small-1">
+            <p class="grey"></p>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <label>Buscar Colaborador</label>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <fieldset class="form-group position-relative has-icon-left font-small-1">
+                                <input type="text" class="form-control" 
+                                        [(ngModel)]="codigoTrabajador" 
+                                        id="iconLeft1" 
+                                        (keyup)="onKeycodigo($event)" 
+                                        placeholder="Ingrese código de trabajador">
+                                <div class="form-control-position">
+                                    <i class="ft-user"></i>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <ng-select  [items]="listPersona" 
+                                        (keyup)="onKeynombcomp($event)" 
+                                        [(ngModel)]="usuarioSolicitar" 
+                                        bindLabel="tnombcomp" 
+                                        placeholder="Buscar por nombre o apellido" 
+                                        id="tnombcomp"
+                                        (change)="selecUsuario(usuarioSolicitar)">
+                                        <!-- <ng-template ng-option-tmp let-item="item" let-index="index">
+                                            {{item.idvacuna}} - {{item.tdescvacu}}
+                                        </ng-template> -->
+                            </ng-select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" (click)="listarAtencionMedica()">Entrar</button>
+                    <!-- <button type="button" class="btn btn-secondary">Entrar</button> -->
+                </div>
+                <div class="col-xs-12 col-md-6" *ngIf="usuarioSolicitar!=null">
+                  <div class="users-list-padding position-relative">
+                    <a class="list-group-item " >
+                      <div class="media chat-list-text py-1" >
+                        <span class="avatar avatar-md mr-2">
+                          <img src="{{usuarioSolicitar.p_foto}}" alt="Avatar">
+                          <span class="avatar-status"></span>
+                          <i></i>
+                        </span>
+                        <div class="media-body">
+                          <h6 class="list-group-item-heading mb-1">{{usuarioSolicitar.tnombcomp}}
+                          </h6>
+                          <p class="list-group-item-text chat-user-list-text m-0">
+                            <i class="icon-badge primary font-small-2 mr-1"></i>
+                            <span>{{usuarioSolicitar.tnombunidfunc}}</span> - 
+                            <span>{{usuarioSolicitar.tdescpues}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 col-lg-12" *ngIf="flagAtencionMedica">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header font-small-1">
+                <label class="font-small-1">Atención Médica</label>
+                <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarAtencion(0, null)" >Agregar</button>
+            </div>
+            <div class="card-body font-small-1" *ngIf="listatenmedi">
+              <p class="grey"></p>
+              <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+              [rows]="listatenmedi" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                <ngx-datatable-column name="Fecha Atención" prop="tfechregi" [width]="80"></ngx-datatable-column>
+                <ngx-datatable-column name="Diagnostico" prop="tdiagnostico" [width]="80"></ngx-datatable-column>
+                <ngx-datatable-column name="Descripción" prop="tdescatenmedi" [width]="80"></ngx-datatable-column>
+                <ngx-datatable-column name="Descanso Médico" prop="tdescmedi" [width]="50"></ngx-datatable-column>
+                  
+                  <ngx-datatable-column name="Acción" [width]="100">
+                      <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                      <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                      <i class="ft-edit text-primary cursor-pointer mr-2"
+                      (click)="modalAgregarAtencion(1, row)"></i>
+                      <i class="ft-x text-primary cursor-pointer"
+                      (click)="modalEliminar(row)"></i>
+                      </ng-template>
+                  </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+    </div>
+</div> 

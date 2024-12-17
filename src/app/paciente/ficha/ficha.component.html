@@ -1,0 +1,454 @@
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body font-small-1">
+            <p class="grey"></p>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <label>Buscar Colaborador</label>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <fieldset class="form-group position-relative has-icon-left font-small-1">
+                                <input type="text" class="form-control" 
+                                        [(ngModel)]="codigoTrabajador" 
+                                        id="iconLeft1" 
+                                        (keyup)="onKeycodigo($event)" 
+                                        placeholder="Ingrese código de trabajador">
+                                <div class="form-control-position">
+                                    <i class="ft-user"></i>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <ng-select  [items]="listPersona" 
+                                        (keyup)="onKeynombcomp($event)" 
+                                        [(ngModel)]="usuarioSolicitar" 
+                                        bindLabel="tnombcomp" 
+                                        placeholder="Buscar por nombre o apellido" 
+                                        id="tnombcomp"
+                                        (change)="selecUsuario(usuarioSolicitar)">
+                                        <!-- <ng-template ng-option-tmp let-item="item" let-index="index">
+                                            {{item.idvacuna}} - {{item.tdescvacu}}
+                                        </ng-template> -->
+                            </ng-select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" (click)="listarTablas()">Entrar</button>
+                </div>
+                <div class="col-xs-12 col-md-6" *ngIf="usuarioSolicitar!=null">
+                  <div class="users-list-padding position-relative">
+                    <a class="list-group-item " >
+                      <div class="media chat-list-text py-1" >
+                        <span class="avatar avatar-md mr-2">
+                          <img src="{{usuarioSolicitar.p_foto}}" alt="Avatar">
+                          <span class="avatar-status"></span>
+                          <i></i>
+                        </span>
+                        <div class="media-body">
+                          <h6 class="list-group-item-heading mb-1">{{usuarioSolicitar.tnombcomp}}
+                          </h6>
+                          <p class="list-group-item-text chat-user-list-text m-0">
+                            <i class="icon-badge primary font-small-2 mr-1"></i>
+                            <span>{{usuarioSolicitar.tnombunidfunc}}</span> - 
+                            <span>{{usuarioSolicitar.tdescpues}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 col-lg-12">
+        <div *ngIf="flagDetalle">
+            <!-- Descripcion del colaborador -->
+            <div class="col-xs-12 col-md-12 col-xl-12 col-lg-12">
+                <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
+                <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm">
+                    <!-- <div class="col-xs-12" *ngIf="usuarioSolicitar!=null"> -->
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-header font-small-1">
+                                <label class="font-small-1">Información Personal</label>
+                            </div>
+                            <div class="card-body font-small-1">
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text  font-small-1" id="tnumedocuiden">Documento</span>
+                                            <input type="text" 
+                                                [formControl]="myForm.controls['tnumedocuiden']" 
+                                                formControlName="tnumedocuiden"
+                                                class="form-control font-small-1" 
+                                                id="tnumedocuiden" 
+                                                placeholder="Documento identidad" 
+                                                (keydown.enter)="$event.preventDefault()"
+                                                #tnumedocuiden
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text font-small-1" id="tfechnaci">F. Nacimiento</span>
+                                            <input type="text" 
+                                                [formControl]="myForm.controls['tfechnaci']" 
+                                                formControlName="tfechnaci"
+                                                class="form-control font-small-1" 
+                                                id="tfechnaci" 
+                                                placeholder="Nacimiento" 
+                                                (keydown.enter)="$event.preventDefault()"
+                                                #tnumedocuiden
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text font-small-1" id="tsexo">Sexo</span>
+                                            <input type="text" 
+                                                [formControl]="myForm.controls['tsexo']" 
+                                                formControlName="tsexo"
+                                                class="form-control font-small-1" 
+                                                id="tsexo" 
+                                                placeholder="Sexo" 
+                                                (keydown.enter)="$event.preventDefault()"
+                                                #tnumedocuiden
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text font-small-1" id="tdescnacionalidad">Nacionalidad</span>
+                                            <input type="text" 
+                                                [formControl]="myForm.controls['tdescnacionalidad']" 
+                                                formControlName="tdescnacionalidad"
+                                                class="form-control font-small-1" 
+                                                id="tdescnacionalidad" 
+                                                placeholder="Nacionalidad" 
+                                                (keydown.enter)="$event.preventDefault()"
+                                                #tnumedocuiden
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text font-small-1" id="emo">Última EMO</span>
+                                            <input type="text" 
+                                                [formControl]="myForm.controls['emo']" 
+                                                formControlName="emo"
+                                                class="form-control font-small-1" 
+                                                id="emo" 
+                                                placeholder="EMO" 
+                                                (keydown.enter)="$event.preventDefault()"
+                                                #tnumedocuiden
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text font-small-1" id="alergias">Alergias</span>
+                                            <select id="basic-form-6" name="interested" class="form-control font-small-1">
+                                                <option *ngFor="let alergia of listAlerXPers" 
+                                                        value="{{alergia.idalergia}}" 
+                                                        selected disabled>{{alergia.tnombaler}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <!-- ALergias -->
+                
+                <!-- Antecedentes Patológicos -->
+                <div class="col-xs-12 col-md-8">
+                    <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
+                        <!-- <div class="col-xs-12" *ngIf="usuarioSolicitar!=null"> -->
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-header font-small-1">
+                                    <label class="font-small-2">Antecedentes Patológicos</label>
+                                    <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarAntePato(0, null)" >Agregar</button>
+                                </div>
+                                <div class="card-body font-small-1">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12">
+                                            <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                            [rows]="listAntePatoXPers" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                                <ngx-datatable-column name="Descripcion" prop="tdescantepato" [width]="80"></ngx-datatable-column>
+                                                <ngx-datatable-column name="Controlado" prop="tflagcontrol" [width]="50">
+                                                    <ng-template let-status="value" ngx-datatable-cell-template>
+                                                    <div class="badge badge-pill"
+                                                        [ngClass]="{'bg-light-warning': status == '5', 'bg-light-success':status == '1', 'bg-light-danger':status == '0' , 'bg-light-primary':status == '4' }">
+                                                        {{ status == 1 ? "Controlado" : "No controlado" }}
+                                                    </div>
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Ultimo Control" prop="tfechulticont" [width]="80"></ngx-datatable-column>
+                                                <ngx-datatable-column name="# Control" prop="tcanttotacont" [width]="80"></ngx-datatable-column>
+                                                <ngx-datatable-column name="Observación" prop="tobservacion" [width]="80"></ngx-datatable-column>
+                                                
+                                                <ngx-datatable-column name="Acción" [width]="100">
+                                                    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                                    <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                                    <i class="ft-edit text-primary cursor-pointer mr-2"
+                                                    (click)="modalAgregarAntePato(1, row)"></i>
+                                                    <i class="ft-x text-primary cursor-pointer"
+                                                    (click)="modalEliminar(row)"></i>
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+            <!-- Antecedentes Ocupacionales -->
+            <div class="col-xs-12 col-md-12">
+                <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
+                    <!-- <div class="col-xs-12" *ngIf="usuarioSolicitar!=null"> -->
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-header font-small-2">
+                                <label class="font-small-2">Antecedentes Ocupacionales </label>
+                                <button type="button" class="d-inline-block btn btn-secondary mb-1 mr-1 font-small-2" (click)="modalAgregarAnteOcup(0, null)" placement="top" ngbTooltip="Nuevo EMO"><i class="fa ft-edit-2 mr-1"></i>Registrar nuevo EMO</button>
+                                <button type="button" *ngIf="objeEMOXPersAO?.idaptitudemo != null" class="d-inline-block btn btn-secondary mb-1 font-small-2" (click)="modalAgregarAnteOcup(1, objeEMOXPersAO)" placement="top" ngbTooltip="Agregar aptitud o editar aptitud"><i class="fa fa-edit mr-1"></i>Agregar aptitud</button>
+                            </div>
+                            <div class="card-body font-small-2">
+                                <div class="row" >
+                                    <div class="col-xl-4 col-md-4 col-xs-12">
+                                        <p>Examen medico ocupacional (EMO). 
+                                        </p>
+                                        <ul class="list-group" *ngIf="objeEMOXPersAO?.idaptitudemo != null">
+                                            <li class="list-group-item">
+                                                <label class="font-small-1">EMO ingreso:</label> {{objeEMOXPersAO.tfechinicfirst}}
+                                            </li>
+                                            <li class="list-group-item">
+                                                 
+                                                <i class="ft-edit text-primary cursor-pointer mr-2" *ngIf="objeEMOXPersAO?.idaptitudemo != null" (click)="modalAgregarAnteOcup(1, objeEMOXPersAO)" placement="top" ngbTooltip="Agregar aptitud"></i>
+                                                <label class="font-small-1">EMO último:</label> {{objeEMOXPersAO.tfechiniclast}}
+                                                <!-- <i class="ft-edit text-primary cursor-pointer mr-2" *ngIf="objeEMOXPersAO" (click)="modalAgregarAnteOcup(1, null)" ></i> -->
+                                                <!-- <button type="button" class="d-inline-block btn btn-secondary mr-1 subcard" *ngIf="objeEMOXPersAO" (click)="modalAgregarAnteOcup(1, null)" >Actualizar</button> -->
+                                            </li>
+                                            <li class="list-group-item"><label class="font-small-1">EMO períodico:</label> {{objeEMOXPersAO.tamatota}}</li>
+                                            <li class="list-group-item"><label class="font-small-1">EMO retiro:</label> </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xl-8 col-md-8 col-xs-12">
+                                        <p class="badge badge-pill" *ngIf="objeEMOXPersAO?.idaptitudemo != null"
+                                        [ngClass]="{'bg-light-success':objeEMOXPersAO?.idaptitudemo === '1', 'bg-light-success':objeEMOXPersAO?.idaptitudemo === '2', 'bg-light-danger':objeEMOXPersAO?.idaptitudemo === '3' }">{{objeEMOXPersAO?.tdescaptitudemo}}
+                                            <!-- <button type="button" class="d-inline-block btn btn-secondary mr-1 subcard" *ngIf="objeEMOXPersAO" (click)="modalAgregarAnteOcupAptitud(0, null, objeEMOXPersAO)" >Agregar</button> -->
+                                        </p>
+                                        <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                        [rows]="listEmoXPersLast" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                        
+                                            <!-- <ngx-datatable-column name="Aptitud" prop="tdescaptitudemo" [width]="80"></ngx-datatable-column> -->
+                                            <ngx-datatable-column name="Especialidad" prop="tnombespe" [width]="80"></ngx-datatable-column>
+                                            <ng-container *ngIf="objeEMOXPersAO?.idaptitudemo === 2">
+                                                <ngx-datatable-column name="Restricción" prop="tnombrest" [width]="80"></ngx-datatable-column>
+                                            </ng-container>
+                                            <ng-container *ngIf="objeEMOXPersAO?.idaptitudemo === 3">
+                                                <ngx-datatable-column name="Motivo" prop="tnombrest" [width]="80"></ngx-datatable-column>
+                                            </ng-container>
+                                            <ng-container *ngIf="objeEMOXPersAO?.idaptitudemo !== 2">
+                                                <ngx-datatable-column name="Levantado" prop="tstatus" [width]="100" >
+                                                    <ng-template let-status="value" ngx-datatable-cell-template>
+                                                    <div class="badge badge-pill"
+                                                        [ngClass]="{'bg-light-success':status == '1', 'bg-light-danger':status == '0' }">
+                                                        {{ status == 1 ? "Si" : "No" }}
+                                                    </div>
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Fecha Límite" prop="tfechalimite" [width]="100" ></ngx-datatable-column>
+                                            </ng-container>
+                                            
+                                            <ngx-datatable-column name="Acción" [width]="100">
+                                                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                                <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                                <i class="ft-edit text-primary cursor-pointer mr-2" (click)="modalAgregarAnteOcupAptitud(1, row, objeEMOXPersAO)"></i>
+                                                <i class="ft-x text-primary cursor-pointer" (click)="modalEliminarAnteOcupAptiXPers(row)"></i>
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                        </ngx-datatable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </form> -->
+            </div>
+            <!-- Accidentes laborales -->
+            <div class="col-xs-12 col-md-12">
+                <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
+                    <!-- <div class="col-xs-12" *ngIf="usuarioSolicitar!=null"> -->
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-header font-small-1">
+                                <label class="font-small-2">Accidentes Laborales</label>
+                                <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarAcciLabo(0, null)" >Agregar</button>
+                            </div>
+                            <div class="card-body font-small-1">
+                                <div class="row" *ngIf="objeEMOXPersAO">
+                                    <div class="col-xl-12 col-md-12 col-xs-12">
+                                        <!-- <p>Aptitud EMO. </p> -->
+                                        <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                        [rows]="listAccidenteLaboral" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                            <ngx-datatable-column name="Fecha Accidente" prop="tfechacci" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Diagnostico" prop="tdiagnostico" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Clasificación" prop="tclasificacion" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Referencia" prop="treferencia" [width]="80">
+                                                <ng-template let-status="value" ngx-datatable-cell-template>
+                                                    <div class="badge badge-pill"
+                                                        [ngClass]="{'bg-light-success':status == '1', 'bg-light-danger':status == '0' }">
+                                                        {{ status == 1 ? "Si" : "No" }}
+                                                    </div>
+                                                    </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="Descanso Médico" prop="tdescansomedico" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Restricción" prop="trestriccionlaboral" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Indicación Especial" prop="tindicacionespecial" [width]="80"></ngx-datatable-column>
+                                            <ngx-datatable-column name="Observaciones" prop="tobservaciones" [width]="80"></ngx-datatable-column>
+                                            <!-- <ngx-datatable-column name="Levantado" prop="tstatus" [width]="100">
+                                                <ng-template let-status="value" ngx-datatable-cell-template>
+                                                <div class="badge badge-pill"
+                                                    [ngClass]="{'bg-light-success':status == '1', 'bg-light-danger':status == '0' }">
+                                                    {{ status == 1 ? "Si" : "No" }}
+                                                </div>
+                                                </ng-template>
+                                            </ngx-datatable-column> -->
+                                            <!-- <ngx-datatable-column name="Fecha Límite" prop="tfechalimite" [width]="100"></ngx-datatable-column> -->
+                                            
+                                            
+                                            <ngx-datatable-column name="Acción" [width]="100">
+                                                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                                <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                                <i class="ft-edit text-primary cursor-pointer mr-2" (click)="modalAgregarAcciLabo(1, row)"></i>
+                                                <i class="ft-x text-primary cursor-pointer" (click)="modalEliminarAcciLabo(row)"></i>
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                        </ngx-datatable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </form> -->
+            </div>
+            <!-- Vacunas -->
+            <div class="col-xs-12 col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-header font-small-1">
+                            <label class="font-small-2">Esquema de vacunación</label>
+                            <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarVacuXPers(0, null)" >Agregar</button>
+                        </div>
+                        <div class="card-body font-small-1">
+                            <div class="row" *ngIf="objeEMOXPersAO">
+                                <div class="col-xl-12 col-md-12 col-xs-12">
+                                    <!-- <p>Aptitud EMO. </p> -->
+                                    <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                    [rows]="listVacuna" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                    
+                                        <ngx-datatable-column name="Nombre Vacuna" prop="tdescvacu" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Aplicación" prop="tfechapli" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="# Dosis" prop="tnumedosi" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="# Total Dosis" prop="ttotanumedosi" [width]="80"></ngx-datatable-column>
+                                        
+                                        
+                                        <ngx-datatable-column name="Acción" [width]="100">
+                                            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                            <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                            <i class="ft-edit text-primary cursor-pointer mr-2" (click)="modalAgregarVacuXPers(1, row)"></i>
+                                            <i class="ft-x text-primary cursor-pointer" (click)="modalEliminarVacunaXPers(row)"></i>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gestantes -->
+            <div class="col-xs-12 col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-header font-small-1">
+                            <label class="font-small-2">Gestante</label>
+                            <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarGestante(0, null)" >Agregar</button>
+                        </div>
+                        <div class="card-body font-small-1">
+                            <div class="row" *ngIf="objeEMOXPersAO">
+                                <div class="col-xl-12 col-md-12 col-xs-12">
+                                    <p>Captación </p>
+                                    <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                    [rows]="firstGestante" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                    
+                                        <ngx-datatable-column name="# Control" prop="tnumecontrol" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Fecha Captacion" prop="tfechcapt" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="FUR" prop="tfur" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="FPP" prop="tfpp" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Número de Controles" prop="tconthosp" [width]="100"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Semana Gestación" prop="tsemagest" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="AU" prop="tau" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="LCF" prop="tlcf" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Movimientos Fetales" prop="tmovifeta" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Observaciones" prop="tobse" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Tele. Familiar" prop="ttelefami" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Riesgo Ocupacional" prop="triesocup" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Proxima cita" prop="tproxcita" [width]="80"></ngx-datatable-column>
+                                        
+                                        
+                                        <ngx-datatable-column name="Acción" [width]="100">
+                                            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                            <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                            <i class="ft-edit text-primary cursor-pointer mr-2" (click)="modalAgregarGestante(1, row)"></i>
+                                            <i class="ft-x text-primary cursor-pointer" (click)="modalEliminarGestante(row)"></i>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                                <div class="col-xl-12 col-md-12 col-xs-12">
+                                    <p>Controles </p>
+                                    <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                    [rows]="restGestante" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                    
+                                        <ngx-datatable-column name="# Control" prop="tnumecontrol" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Fecha Control" prop="tfechcapt" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="FUR" prop="tfur" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="FPP" prop="tfpp" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Semana Gestación" prop="tsemagest" [width]="80"></ngx-datatable-column>
+                                        <!-- <ngx-datatable-column name="Riesgo Ocupacional" prop="triesocup" [width]="80"></ngx-datatable-column> -->
+                                        <!-- <ngx-datatable-column name="Turno Trabajo" prop="tturntrab" [width]="80"></ngx-datatable-column> -->
+                                        <ngx-datatable-column name="AU" prop="tau" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="LCF" prop="tlcf" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Movimientos Fetales" prop="tmovifeta" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Observaciones" prop="tobse" [width]="80"></ngx-datatable-column>
+                                        
+                                        
+                                        <ngx-datatable-column name="Acción" [width]="100">
+                                            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                            <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                            <i class="ft-edit text-primary cursor-pointer mr-2" (click)="modalAgregarGestante(1, row)"></i>
+                                            <i class="ft-x text-primary cursor-pointer" (click)="modalEliminarGestante(row)"></i>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

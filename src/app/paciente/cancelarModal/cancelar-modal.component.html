@@ -1,0 +1,30 @@
+
+    <!-- <div class="modal-content"> -->
+<div class="modal-header">
+  <h4 class="modal-title"> ¿Esta seguro de eliminar {{ titulo }} ? </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    x
+  </button>
+</div>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-body">
+    <div class="container">
+      <!-- <fieldset class="form-group position-relative has-icon-left">
+        <div class="form-control-position">
+          <i class="ft-grid"></i>
+        </div>
+        <input type="text" [formControl]="myForm.controls['motivo']" formControlName="motivo" class="form-control"
+          id="motivo" placeholder="Motivo" (keydown.enter)="$event.preventDefault()" required #motivo>
+        <div class="form-control-position control-position-right">
+          <i class="ft-grid"></i>
+        </div>
+      </fieldset> -->
+    </div>
+  </div>
+  <div class="modal-footer taskboard-modal-footer">
+    <button class="btn btn-secondary btn-save">
+      Aceptar
+    </button>
+  </div>
+</form>
+<!-- </div> -->

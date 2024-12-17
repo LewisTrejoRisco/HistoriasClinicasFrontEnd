@@ -1,0 +1,102 @@
+<div class="modal-header">
+  <h4 class="modal-title"> {{ id != 0 ? 'Actualizar Accidente Laboral' : 'Agregar Accidente Laboral'}} </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    x
+  </button>
+</div>
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tfechacci.invalid || lf.tfechacci.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+                <input type="text" [formControl]="myForm.controls['tfechacci']" readonly formControlName="tfechacci" class="form-control"
+                  id="tfechacci" placeholder="Fecha Accidente" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
+                <div class="input-group-append">
+                  <div class="input-group-text" (click)="d2.toggle()">
+                    <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tdiagnostico.invalid || lf.tdiagnostico.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltdiagnostico">Diagnostico</span>
+              <input type="text" [formControl]="myForm.controls['tdiagnostico']" formControlName="tdiagnostico" class="form-control"
+              id="tdiagnostico" placeholder="Diagnostico" (keydown.enter)="$event.preventDefault()" #tdiagnostico>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="modalFormSubmitted && (lf.tclasificacion.invalid || lf.tclasificacion.errors?.required)"
+          class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
+          Campo requerido</div>
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltclasificacion">Clasificación</span>
+              <input type="text" [formControl]="myForm.controls['tclasificacion']" formControlName="tclasificacion" class="form-control"
+              id="tclasificacion" placeholder="Clasificación" (keydown.enter)="$event.preventDefault()" #tclasificacion>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="form-group position-relative has-icon-left">
+            <ng-select  [items]="listReferencia" [formControl]="myForm.controls['treferencia']" bindLabel="tdescreferencia" formControlName="treferencia" placeholder="Referencia" id="treferencia">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltdescansomedico">Descanso Médico</span>
+              <input type="text" [formControl]="myForm.controls['tdescansomedico']" formControlName="tdescansomedico" class="form-control"
+              id="tdescansomedico" placeholder="# días" (keydown.enter)="$event.preventDefault()" #tdescansomedico>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltrestriccionlaboral">Restricción</span>
+              <input type="text" [formControl]="myForm.controls['trestriccionlaboral']" formControlName="trestriccionlaboral" class="form-control"
+              id="trestriccionlaboral" placeholder="Restricción" (keydown.enter)="$event.preventDefault()" #trestriccionlaboral>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltindicacionespecial">Ind. Especial</span>
+              <input type="text" [formControl]="myForm.controls['tindicacionespecial']" formControlName="tindicacionespecial" class="form-control"
+              id="tindicacionespecial" placeholder="Restricción" (keydown.enter)="$event.preventDefault()" #tindicacionespecial>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <span class="input-group-text" id="ltobservaciones">Observaciones</span>
+              <input type="text" [formControl]="myForm.controls['tobservaciones']" formControlName="tobservaciones" class="form-control"
+              id="tobservaciones" placeholder="Observaciones" (keydown.enter)="$event.preventDefault()" #tobservaciones>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer taskboard-modal-footer">
+    <button class="btn btn-secondary btn-save">
+      {{ id != 0 ? 'Actualizar' : 'Solicitar'}}
+    </button>
+  </div>
+</form>
+<!-- </div> -->

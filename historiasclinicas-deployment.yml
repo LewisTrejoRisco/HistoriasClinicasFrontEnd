@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: historiasclinicas
+  namespace: nettalco-medicina
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: historiasclinicas
+  template:
+    metadata:
+      labels:
+        app: historiasclinicas
+    spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - name: historiasclinicas
+        image: historiasclinicas:v1.0  # Cambia esto según tu registro
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: historiasclinicas
+  namespace: nettalco-medicina
+spec:
+  selector:
+    app: historiasclinicas
+  ports:
+    - port: 8080
+      targetPort: 8080

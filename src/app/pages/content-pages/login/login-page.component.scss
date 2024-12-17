@@ -1,0 +1,21 @@
+.alert-light-danger {
+  background-color: #FEEFD0 !important;
+  color: #F55252  !important;
+  border-color: #FEEFD0;
+}
+.position-relative {
+  position: relative;
+}
+
+.top-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 56px; /* Alto deseado para la imagen superior */
+  object-fit: cover;
+}
+
+.bottom-img {
+  margin-top: 56px; /* Asegura que la imagen inferior esté debajo de la imagen superior */
+}
