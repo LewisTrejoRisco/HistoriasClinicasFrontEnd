@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DELETE_ACCILABO, DELETE_AOXPER, DELETE_APTITUDEMO_AOXPER, DELETE_APXPER, DELETE_VACUNA, DELETE_VACUNAXPERS, FINDBYIDHISTEMOPERS, INSERT_ACCILABO, INSERT_AOXPER, INSERT_AP, INSERT_APTITUDEMO_AOXPER, INSERT_APXPER, INSERT_ESPECIALIDAD_AO, INSERT_RESTRICCION_AO, INSERT_VACUNA, INSERT_VACUNAXPERS, LIKE_ANTEPATO, LISTARXCODIGO, LISTARXNOMBRE, LISTAR_ACCIDENTESLABORALES_PERSONA, LISTAR_ALERGIA_PERSONA, LISTAR_ANTEPATOXPER, LISTAR_APTITUDEMO_AO, LISTAR_EMOXPERSONA_AO, LISTAR_EMOXPERSONA_FIRS_LAST, LISTAR_ESPECIALIDAD_AO, LISTAR_RESTRICCION_AO, LISTAR_VACUNA, LISTAR_VACUNAXPERS, UPDATE_ACCILABO, UPDATE_AOXPER, UPDATE_APTITUDEMO_AOXPER, UPDATE_APXPER, UPDATE_VACUNA, UPDATE_VACUNAXPERS, URL_END_POINT_BASE_2 } from "app/shared/utilitarios/Constantes";
+import { DELETE_ACCILABO, DELETE_AOXPER, DELETE_APTITUDEMO_AOXPER, DELETE_APXPER, DELETE_VACUNA, DELETE_VACUNAXPERS, FINDBYIDHISTEMOPERS, INSERT_ACCILABO, INSERT_AOXPER, INSERT_AP, INSERT_APTITUDEMO_AOXPER, INSERT_APXPER, INSERT_ESPECIALIDAD_AO, INSERT_RESTRICCION_AO, INSERT_VACUNA, INSERT_VACUNAXPERS, LIKE_ANTEPATO, LISTARXCODIGO, LISTARXNOMBRE, LISTAR_ACCIDENTESLABORALES_PERSONA, LISTAR_ALERGIA_PERSONA, LISTAR_ANTEPATOXPER, LISTAR_APTITUDEMO_AO, LISTAR_EMOXPERSONA_AO, LISTAR_EMOXPERSONA_FIRS_LAST, LISTAR_ESPECIALIDAD_AO, LISTAR_RESTRICCION_AO, LISTAR_VACUNA, LISTAR_VACUNAXPERS, OBTENERFOTO, UPDATE_ACCILABO, UPDATE_AOXPER, UPDATE_APTITUDEMO_AOXPER, UPDATE_APXPER, UPDATE_VACUNA, UPDATE_VACUNAXPERS, URL_END_POINT_BASE_2, URL_END_POINT_BASE_COMMON } from "app/shared/utilitarios/Constantes";
 import { catchError } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
 import { PDFDocument, rgb } from 'pdf-lib';
@@ -367,8 +367,8 @@ export class SolicitarService {
 
     // INFORMACIÓN PERSONAL
     public listXColaborador(tcodipers: string): Observable<any> {
-        console.log(URL_END_POINT_BASE_2 + LISTARXCODIGO + "?tcodipers=" + tcodipers)
-            return this.http.get(URL_END_POINT_BASE_2 + LISTARXCODIGO + "?tcodipers=" + tcodipers)
+        console.log(URL_END_POINT_BASE_COMMON + LISTARXCODIGO + "?tcodipers=" + tcodipers)
+            return this.http.get(URL_END_POINT_BASE_COMMON + LISTARXCODIGO + "?tcodipers=" + tcodipers)
             .pipe(catchError(e => {
                 console.error(' Error al intentar listar colaborador, Msg: ' + e.error);
                 return throwError(e);
@@ -377,8 +377,8 @@ export class SolicitarService {
     }
 
     public listColaByTnomb(tnombcomp: string): Observable<any> {
-        console.log(URL_END_POINT_BASE_2 + LISTARXNOMBRE + "?tnombcomp=" + tnombcomp)
-            return this.http.get(URL_END_POINT_BASE_2 + LISTARXNOMBRE + "?tnombcomp=" + tnombcomp)
+        console.log(URL_END_POINT_BASE_COMMON + LISTARXNOMBRE + "?tnombcola=" + tnombcomp)
+            return this.http.get(URL_END_POINT_BASE_COMMON + LISTARXNOMBRE + "?tnombcola=" + tnombcomp)
             .pipe(catchError(e => {
                 console.error(' Error al intentar listar colaborador, Msg: ' + e.error);
                 return throwError(e);
@@ -792,5 +792,23 @@ export class SolicitarService {
             })
         );
     }
+
+    obtenerFoto(codiUsua: string, token: string ) {
+        // console.log(OBTENERFOTO + codiUsua)
+        // console.log(token)
+        const headers = new HttpHeaders({
+            'Authorization': token
+        });
+        //console.log(headers)
+            return this.http.get(OBTENERFOTO + codiUsua, { 
+              headers: headers,
+              responseType: 'blob'
+            })
+            .pipe(catchError(e => {
+                console.error(' Error al intentar mostrar foto. Msg: ' + e.error);
+                return throwError(e);
+            })
+        );
+      }
 
 }

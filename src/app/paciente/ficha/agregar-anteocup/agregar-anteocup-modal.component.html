@@ -15,7 +15,7 @@
           <div class="input-group">
             <span class="input-group-text" id="spanttfechinic">Fecha EMO Vigente</span>
               <input type="text" [formControl]="myForm.controls['tfechinic']" readonly formControlName="tfechinic" class="form-control"
-                id="tfechinic" placeholder="Fecha control" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
+                id="tfechinic" placeholder="Fecha control" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker"  (click)="d2.toggle()">
               <div class="input-group-append">
                 <div class="input-group-text" (click)="d2.toggle()">
                   <i class="fa fa-calendar" style="cursor: pointer;"></i>
@@ -29,7 +29,7 @@
           <div class="input-group">
             <span class="input-group-text" id="spanttfechinic">Programación EMO</span>
               <input type="text" [formControl]="myForm.controls['tfechrese']" readonly formControlName="tfechrese" class="form-control"
-                id="tfechrese" placeholder="Fecha programación EMO" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d3="ngbDatepicker" >
+                id="tfechrese" placeholder="Fecha programación EMO" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d3="ngbDatepicker"  (click)="d3.toggle()">
               <div class="input-group-append">
                 <div class="input-group-text" (click)="d3.toggle()">
                   <i class="fa fa-calendar" style="cursor: pointer;"></i>
@@ -122,7 +122,8 @@
                      name="tfechalimite" 
                      placeholder="Fecha límite" 
                      (keydown.enter)="$event.preventDefault()" 
-                     ngbDatepicker #d2="ngbDatepicker" >
+                     ngbDatepicker #d2="ngbDatepicker" 
+                     (click)="d2.toggle()">
               <div class="input-group-append">
                 <div class="input-group-text" (click)="d2.toggle()">
                   <i class="fa fa-calendar" style="cursor: pointer;"></i>

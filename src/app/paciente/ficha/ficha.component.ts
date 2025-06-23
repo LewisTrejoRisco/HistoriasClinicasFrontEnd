@@ -66,7 +66,14 @@ export class FichaComponent implements OnInit {
     this.sesion = JSON.parse(this.authService.userSesion);
     this.usuarioSolicitar = JSON.parse(this.authService.userUsuarioExpediente);
     if (this.usuarioSolicitar != null) {
-      this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
+      this.codigoTrabajador = this.usuarioSolicitar.tcodipersresu;
+      this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+        (imagen: Blob) =>{
+          this.createImageFromBlob(imagen);
+        }, error=> {
+          console.log(error)
+        }
+      )
       this.listarTablas();
     }
   }
@@ -94,6 +101,8 @@ export class FichaComponent implements OnInit {
   }
 
   listarTablas() {
+    
+    // console.log(this.usuarioSolicitar)
     // INFORMACION PERSONAL => EMO REGISTRO
     this.listEmoXPers(this.usuarioSolicitar.tcodipers)
     // INFORMACION PERSONAL => ALERGIAS
@@ -113,7 +122,7 @@ export class FichaComponent implements OnInit {
   }
 
   onKeycodigo(event: any) {
-    if(event.target.value.length >= 7) {
+    if(event.target.value.length >= 4) {
       this.likePersXCodigo(event.target.value.toUpperCase());
     }
   }
@@ -125,8 +134,15 @@ export class FichaComponent implements OnInit {
   }
 
   selecUsuario(selectedItem: any) {
-    this.codigoTrabajador = selectedItem.tcodipers;
+    // this.codigoTrabajador = selectedItem.tcodipers;
     this.authService.guardarUsuarioExpediente(JSON.stringify(this.usuarioSolicitar))
+    this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+      (imagen: Blob) =>{
+        this.createImageFromBlob(imagen);
+      }, error=> {
+        console.log(error)
+      }
+    )
   }
 
   likePersXNomb(tnombcomp: string) {
@@ -146,12 +162,18 @@ export class FichaComponent implements OnInit {
   }
 
   likePersXCodigo(tcodiusua: string) {
-    console.log(tcodiusua);
-    this.solicitarService.listXColaborador("000" + tcodiusua).subscribe(
+    this.solicitarService.listXColaborador(tcodiusua).subscribe(
       resp => {
         this.usuarioSolicitar = resp;
-        this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
+        // this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
         this.authService.guardarUsuarioExpediente(JSON.stringify(this.usuarioSolicitar))
+        this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+          (imagen: Blob) =>{
+            this.createImageFromBlob(imagen);
+          }, error=> {
+            console.log(error)
+          }
+        )
       },
       error => {
           console.log("error:", error.message)
@@ -162,6 +184,22 @@ export class FichaComponent implements OnInit {
           );
       }
     )
+  }
+  
+  // Convierte la imagen Blob en una URL para mostrarla en la vista
+  createImageFromBlob(image: Blob): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.usuarioSolicitar.p_foto = reader.result as string;
+      
+      //console.log(this.sesion)
+      // this.authService.guardarSesion(JSON.stringify(this.sesion));
+      // this.spinner.hide();
+      // this.router.navigate(['/paciente/ficha']);
+    }, false);
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 
   listEmoXPers(tcodipers:string) {
@@ -1311,7 +1349,7 @@ export class FichaComponent implements OnInit {
     });
   }
 
-  modalAgregarGestante(tipo: any, row:any) {
+  modalAgregarGestante(tipo: any, inic: any, row:any) {
     let tnumecontrol = null;
     let tfechcapt = null;
     let tfur = null;
@@ -1343,7 +1381,6 @@ export class FichaComponent implements OnInit {
     let tsato = null;
     let tproxcita = null;
     let tfechinicdescprenata = null;
-    console.log(row)
     if (row != null) {
       if (row.tnumecontrol != null) {
         tnumecontrol = row.tnumecontrol
@@ -1444,11 +1481,11 @@ export class FichaComponent implements OnInit {
       if (row.tedemmmi != null) {
         tedemmmi = row.tedemmmi
       }
-      if (row.tanamnesis != null) {
-        tanamnesis = row.tanamnesis
-      }
       if (row.tsato != null) {
         tsato = row.tsato
+      }
+      if (row.tobse != null) {
+        tobse = row.tobse
       }
       if (row.tproxcita != null) {
         if(row.tproxcita.split('/').length == 3){
@@ -1470,8 +1507,19 @@ export class FichaComponent implements OnInit {
       }
 
     }
+    let tipoactu: any = 0;
+    if (inic == 1) {
+      if (this.listgestante.length > 0) {
+        tipoactu = 1;
+      }
+    } else if (inic == 2) {
+      tipoactu = 0;
+    } else if (inic == 3) {
+      tipoactu = 1;
+    }
     const modalRef = this.modalService.open(AgregarGestanteModalComponent, { size: 'lg' });
     modalRef.componentInstance.id = tipo;
+    modalRef.componentInstance.tipo = tipoactu;
     modalRef.componentInstance.data = { 
                                         tnumecontrol: tnumecontrol,
                                         tfechcapt: tfechcapt,
@@ -1507,9 +1555,7 @@ export class FichaComponent implements OnInit {
                                         usuarioSolicitar: this.usuarioSolicitar
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
       let objeInse = null;
-
       objeInse = {
         tcodigestante: row == null ? null : row.tcodigestante,
         tcodipers: this.usuarioSolicitar.tcodipers,
@@ -1519,9 +1565,9 @@ export class FichaComponent implements OnInit {
         tfpp: result.tfpp == null ? null : result.tfpp.day + '/' + result.tfpp.month + '/' + result.tfpp.year,
         tformobst: result.tformobst,
         tsemagest: result.tsemagest,
-        tpeso: result.tpeso,
+        tpeso: this.convertirString(result.tpeso),
         tpresarte: result.tpresarte,
-        tpulso: result.tpulso,
+        tpulso: this.convertirString(result.tpulso),
         tconthosp: result.tconthosp,
         ttelecont: result.ttelecont,
         ttelefami: result.ttelefami,
@@ -1532,16 +1578,16 @@ export class FichaComponent implements OnInit {
         tturntrab: result.tturntrab,
         tanamnesis: result.tanamnesis,
         tindica: result.tindica,
-        ttemperatura: result.ttemperatura,
-        tau: result.tau,
-        tlcf: result.tlcf,
+        ttemperatura: this.convertirString(result.ttemperatura),
+        tau: this.convertirString(result.tau),
+        tlcf: this.convertirString(result.tlcf),
         tmovifeta: result.tmovifeta,
         tsitu: result.tsitu,
         tpres: result.tpres,
         tposi: result.tposi,
         tedemmmi: result.tedemmmi,
         tobse: result.tobse,
-        tsato: result.tsato,
+        tsato: this.convertirString(result.tsato),
         tproxcita: result.tproxcita == null ? null : result.tproxcita.day + '/' + result.tproxcita.month + '/' + result.tproxcita.year,
         tfechinicdescprenata: result.tfechinicdescprenata == null ? null : result.tfechinicdescprenata.day + '/' + result.tfechinicdescprenata.month + '/' + result.tfechinicdescprenata.year,
         tcodipersregi: this.sesion.tcodipers
@@ -1555,6 +1601,10 @@ export class FichaComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  convertirString(variable: any): string {
+    return variable == null ? null : variable.toString();
   }
 
   metoRegistro(objeinsert: any) {

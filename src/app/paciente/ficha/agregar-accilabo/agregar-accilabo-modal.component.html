@@ -14,7 +14,7 @@
         <div class="col-xs-12 col-md-12">
             <div class="input-group">
                 <input type="text" [formControl]="myForm.controls['tfechacci']" readonly formControlName="tfechacci" class="form-control"
-                  id="tfechacci" placeholder="Fecha Accidente" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
+                  id="tfechacci" placeholder="Fecha Accidente" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker"  (click)="d2.toggle()">
                 <div class="input-group-append">
                   <div class="input-group-text" (click)="d2.toggle()">
                     <i class="fa fa-calendar" style="cursor: pointer;"></i>

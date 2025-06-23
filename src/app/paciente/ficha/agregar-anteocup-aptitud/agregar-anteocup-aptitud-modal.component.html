@@ -79,7 +79,8 @@
                      name="tfechalimite" 
                      placeholder="Fecha Límite" 
                      (keydown.enter)="$event.preventDefault()" 
-                     ngbDatepicker #d2="ngbDatepicker" >
+                     ngbDatepicker #d2="ngbDatepicker" 
+                     (click)="d2.toggle()">
               <div class="input-group-append">
                 <div class="input-group-text" (click)="d2.toggle()">
                   <i class="fa fa-calendar" style="cursor: pointer;"></i>

@@ -4,7 +4,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import firebase from 'firebase/app'
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AUTENTICAR, OBTENERDATOS, OBTENERFOTO, OBTENERTOKEN, URL_END_POINT_BASE, URL_END_POINT_BASE_2 } from 'app/shared/utilitarios/Constantes';
+import { AUTENTICAR, FINDBYTCODIPERS, LISTARXCODIGO, OBTENERFOTO, OBTENERTOKEN, URL_END_POINT_BASE, URL_END_POINT_BASE_2, URL_END_POINT_BASE_COMMON } from 'app/shared/utilitarios/Constantes';
 import { catchError } from "rxjs/operators";
 
 @Injectable()
@@ -141,7 +141,7 @@ export class AuthService {
 
   public obtenerDatos(codiUsua: string) {
     //console.log(URL_END_POINT_BASE + OBTENERDATOS + codiUsua)
-        return this.http.get(URL_END_POINT_BASE_2 + OBTENERDATOS + codiUsua)
+        return this.http.get(URL_END_POINT_BASE_COMMON + FINDBYTCODIPERS + "?tcodipers=" + codiUsua)
         .pipe(catchError(e => {
             console.error(' Error al intentar listar. Msg: ' + e.error);
             return throwError(e);
@@ -150,7 +150,7 @@ export class AuthService {
   }
 
   public obtenerFoto(codiUsua: string, token: string ) {
-    // console.log(OBTENERFOTO + codiUsua)
+    console.log(codiUsua + " - " +token)
     // console.log(token)
     const headers = new HttpHeaders({
         'Authorization': token

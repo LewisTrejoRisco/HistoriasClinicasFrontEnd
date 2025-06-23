@@ -48,6 +48,7 @@ export class AgregarGestanteModalComponent implements OnInit{
 
   type = 'Marketing';
   @Input() id: number;
+  @Input() tipo: number;
   @Input() data: {};
   myForm: UntypedFormGroup;
   d2: any;
@@ -108,7 +109,7 @@ export class AgregarGestanteModalComponent implements OnInit{
       tpres: [item.tpres || null],
       tposi: [item.tposi || null],
       tedemmmi: [item.tedemmmi || null],
-      tobse: [item.tanamnesis || null],
+      tobse: [item.tobse || null],
       tsato: [item.tsato || null],
       tproxcita: [item.tproxcita || null],
       usuarioSolicitar: [item.usuarioSolicitar || null],

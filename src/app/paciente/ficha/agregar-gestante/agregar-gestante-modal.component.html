@@ -8,43 +8,11 @@
   <div class="modal-body">
     <div class="container">
       <div class="row">
-        <!-- <div class="col-xs-12 col-md-6 col-lg-6"> -->
-          <!-- <div *ngIf="modalFormSubmitted && (lf.tnumecontrol.invalid || lf.tnumecontrol.errors?.required)"
-            class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
-            Campo requerido</div> -->
-            <!-- <div class="input-group">
-              <span class="input-group-text" id="ltnumecontrol"># Control</span>
-              <input type="text" [formControl]="myForm.controls['tnumecontrol']" formControlName="tnumecontrol" class="form-control"
-              id="tnumecontrol" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #tnumecontrol>
-            </div> -->
-        <!-- </div> -->
-        <!-- <div class="col-xs-12 col-md-6 col-lg-6"> -->
-          <!-- <div *ngIf="modalFormSubmitted && (lf.tfechcapt.invalid || lf.tfechcapt.errors?.required)"
-            class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
-            Campo requerido</div> -->
-            <!-- <div class="input-group">
-                <input type="text" [formControl]="myForm.controls['tfechcapt']" readonly formControlName="tfechcapt" class="form-control"
-                  id="tfechcapt" placeholder="Fecha Captación" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d2="ngbDatepicker" >
-                <div class="input-group-append">
-                  <div class="input-group-text" (click)="d2.toggle()">
-                    <i class="fa fa-calendar" style="cursor: pointer;"></i>
-                  </div>
-                </div>
-            </div> -->
-        <!-- </div> -->
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
-          <!-- <div *ngIf="modalFormSubmitted && (lf.tfur.invalid || lf.tfur.errors?.required)"
-            class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> 
-            Campo requerido</div> -->
-            <!-- <div class="input-group">
-              <span class="input-group-text" id="ltfur">FUR</span>
-              <input type="text" [formControl]="myForm.controls['tfur']" formControlName="tfur" class="form-control"
-              id="tfur" placeholder="TFUR" (keydown.enter)="$event.preventDefault()" #tfur>
-            </div> -->
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
-              <span class="input-group-text" >Ultima menstruación.</span>
+              <span class="input-group-text" >Ultima menstruación. </span>
                 <input type="text" [formControl]="myForm.controls['tfur']" readonly formControlName="tfur" class="form-control"
-                  id="tfur" placeholder="FUR" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d3="ngbDatepicker" >
+                  id="tfur" name="tfur" placeholder="FUR" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d3="ngbDatepicker"  (click)="d3.toggle()">
                 <div class="input-group-append">
                   <div class="input-group-text" (click)="d3.toggle()">
                     <i class="fa fa-calendar" style="cursor: pointer;"></i>
@@ -52,16 +20,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
-            <!-- <div class="input-group">
-              <span class="input-group-text" id="ltfpp">FPP</span>
-              <input type="text" [formControl]="myForm.controls['tfpp']" formControlName="tfpp" class="form-control"
-              id="tfpp" placeholder="FPP" (keydown.enter)="$event.preventDefault()" #tfpp>
-            </div> -->
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" >Probable de parto</span>
                 <input type="text" [formControl]="myForm.controls['tfpp']" readonly formControlName="tfpp" class="form-control"
-                  id="tfpp" placeholder="FPP" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d4="ngbDatepicker" >
+                  id="tfpp" name="tfpp" placeholder="FPP" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d4="ngbDatepicker" (click)="d4.toggle()" >
                 <div class="input-group-append">
                   <div class="input-group-text" (click)="d4.toggle()">
                     <i class="fa fa-calendar" style="cursor: pointer;"></i>
@@ -69,186 +32,187 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltrestriccionlaboral">Formula Obstetrica</span>
               <input type="text" [formControl]="myForm.controls['trestriccionlaboral']" formControlName="tformobst" class="form-control"
-              id="trestriccionlaboral" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #trestriccionlaboral>
+              id="trestriccionlaboral" name="trestriccionlaboral" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #trestriccionlaboral>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
-              <span class="input-group-text" id="ltsemagest">Semana Gestación</span>
+              <span class="input-group-text" id="ltsemagest">Semana Gestación   </span>
               <input type="text" [formControl]="myForm.controls['tsemagest']" formControlName="tsemagest" class="form-control"
-              id="tsemagest" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #tsemagest>
+              id="tsemagest" name="tsemagest" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #tsemagest>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltpeso">Peso</span>
               <input type="number" [formControl]="myForm.controls['tpeso']" formControlName="tpeso" class="form-control"
-              id="tpeso" placeholder="Peso" (keydown.enter)="$event.preventDefault()" #tpeso>
+              id="tpeso" name="tpeso" placeholder="Peso" (keydown.enter)="$event.preventDefault()" #tpeso>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltpresarte">Presión Arterial</span>
               <input type="text" [formControl]="myForm.controls['tpresarte']" formControlName="tpresarte" class="form-control"
-              id="tpresarte" placeholder="Presión arterial" (keydown.enter)="$event.preventDefault()" #tpresarte>
+              id="tpresarte" name="tpresarte" placeholder="Presión arterial" (keydown.enter)="$event.preventDefault()" #tpresarte>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltpulso">Pulso</span>
               <input type="number" [formControl]="myForm.controls['tpulso']" formControlName="tpulso" class="form-control"
-              id="tpulso" placeholder="Pulso" (keydown.enter)="$event.preventDefault()" #tpulso>
+              id="tpulso" name="tpulso" placeholder="Pulso" (keydown.enter)="$event.preventDefault()" #tpulso>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltconthosp">Centro asistencial de salud</span>
               <input type="text" [formControl]="myForm.controls['tconthosp']" formControlName="tconthosp" class="form-control"
-              id="tconthosp" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #tconthosp>
+              id="tconthosp" name="tconthosp" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #tconthosp>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="lttelecont">Teléfono</span>
               <input type="text" [formControl]="myForm.controls['ttelecont']" formControlName="ttelecont" class="form-control"
-              id="ttelecont" placeholder="Teléfono contacto" (keydown.enter)="$event.preventDefault()" #ttelecont>
+              id="ttelecont" name="ttelecont" placeholder="Teléfono contacto" (keydown.enter)="$event.preventDefault()" #ttelecont>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="lttelefami">Telef. Familiar</span>
               <input type="text" [formControl]="myForm.controls['ttelefami']" formControlName="ttelefami" class="form-control"
-              id="ttelefami" placeholder="Telef. Familiar" (keydown.enter)="$event.preventDefault()" #ttelefami>
+              id="ttelefami" name="ttelefami" placeholder="Telef. Familiar" (keydown.enter)="$event.preventDefault()" #ttelefami>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltotros">Otros</span>
               <input type="text" [formControl]="myForm.controls['totros']" formControlName="totros" class="form-control"
-              id="totros" placeholder="Otros" (keydown.enter)="$event.preventDefault()" #totros>
+              id="totros" name="totros" placeholder="Otros" (keydown.enter)="$event.preventDefault()" #totros>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltriescovi">Riesgo Covid</span>
               <input type="text" [formControl]="myForm.controls['triescovi']" formControlName="triescovi" class="form-control"
-              id="triescovi" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #triescovi>
+              id="triescovi" name="triescovi" placeholder="Agregar" (keydown.enter)="$event.preventDefault()" #triescovi>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltcontcovi">Control Covid</span>
               <input type="text" [formControl]="myForm.controls['tcontcovi']" formControlName="tcontcovi" class="form-control"
-              id="tcontcovi" placeholder="Control covid" (keydown.enter)="$event.preventDefault()" #tcontcovi>
+              id="tcontcovi" name="tcontcovi" placeholder="Control covid" (keydown.enter)="$event.preventDefault()" #tcontcovi>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltriesocup">Riesgo Ocupacional</span>
               <input type="text" [formControl]="myForm.controls['triesocup']" formControlName="triesocup" class="form-control"
-              id="triesocup" placeholder="Riesgo Ocupacional" (keydown.enter)="$event.preventDefault()" #triesocup>
+              id="triesocup" name="triesocup" placeholder="Riesgo Ocupacional" (keydown.enter)="$event.preventDefault()" #triesocup>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltturntrab">Turno Trabajo</span>
               <input type="text" [formControl]="myForm.controls['tturntrab']" formControlName="tturntrab" class="form-control"
-              id="tturntrab" placeholder="Turno Trabajo" (keydown.enter)="$event.preventDefault()" #tturntrab>
+              id="tturntrab" name="tturntrab" placeholder="Turno Trabajo" (keydown.enter)="$event.preventDefault()" #tturntrab>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltanamnesis">Anamnesis</span>
               <input type="text" [formControl]="myForm.controls['tanamnesis']" formControlName="tanamnesis" class="form-control"
-              id="tanamnesis" placeholder="Anamnesis" (keydown.enter)="$event.preventDefault()" #tanamnesis>
+              id="tanamnesis" name="tanamnesis" placeholder="Anamnesis" (keydown.enter)="$event.preventDefault()" #tanamnesis>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="listgestante && listgestante.length === 0 || id != 0">
+        <div class="col-xs-12 col-md-6 col-lg-6" *ngIf="tipo == 0">
             <div class="input-group">
               <span class="input-group-text" id="ltindica">Indicaciones</span>
               <input type="text" [formControl]="myForm.controls['tindica']" formControlName="tindica" class="form-control"
-              id="tindica" placeholder="Indicaciones" (keydown.enter)="$event.preventDefault()" #tindica>
+              id="tindica" name="tindica" placeholder="Indicaciones" (keydown.enter)="$event.preventDefault()" #tindica>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="lttemperatura">Temperatura</span>
               <input type="number" [formControl]="myForm.controls['ttemperatura']" formControlName="ttemperatura" class="form-control"
-              id="ttemperatura" placeholder="Temperatura" (keydown.enter)="$event.preventDefault()" #ttemperatura>
+              id="ttemperatura" name="ttemperatura" placeholder="Temperatura" (keydown.enter)="$event.preventDefault()" #ttemperatura>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltau">AU</span>
-              <input type="number" [formControl]="myForm.controls['tau']" formControlName="tau" class="form-control"
-              id="tau" placeholder="AU" (keydown.enter)="$event.preventDefault()" #tau>
+              <input type="text" [formControl]="myForm.controls['tau']" formControlName="tau" class="form-control"
+              id="tau" name="tau" placeholder="AU" (keydown.enter)="$event.preventDefault()" #tau>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltlcf">LCF</span>
               <input type="text" [formControl]="myForm.controls['tlcf']" formControlName="tlcf" class="form-control"
-              id="tlcf" placeholder="LCF" (keydown.enter)="$event.preventDefault()" #tlcf>
+              id="tlcf" name="tlcf" placeholder="LCF" (keydown.enter)="$event.preventDefault()" #tlcf>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltmovifeta">Movimientos Fetales</span>
               <input type="text" [formControl]="myForm.controls['tmovifeta']" formControlName="tmovifeta" class="form-control"
-              id="tmovifeta" placeholder="Movimientos Fetales" (keydown.enter)="$event.preventDefault()" #tmovifeta>
+              id="tmovifeta" name="tmovifeta" placeholder="Movimientos Fetales" (keydown.enter)="$event.preventDefault()" #tmovifeta>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltsitu">Situación</span>
               <input type="text" [formControl]="myForm.controls['tsitu']" formControlName="tsitu" class="form-control"
-              id="tsitu" placeholder="Situaciones" (keydown.enter)="$event.preventDefault()" #tsitu>
+              id="tsitu" name="tsitu" placeholder="Situaciones" (keydown.enter)="$event.preventDefault()" #tsitu>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltposi">Posición</span>
               <input type="text" [formControl]="myForm.controls['tposi']" formControlName="tposi" class="form-control"
-              id="tposi" placeholder="Posición" (keydown.enter)="$event.preventDefault()" #tposi>
+              id="tposi" name="tposi" placeholder="Posición" (keydown.enter)="$event.preventDefault()" #tposi>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltpres">Presentación</span>
               <input type="text" [formControl]="myForm.controls['tpres']" formControlName="tpres" class="form-control"
-              id="tpres" placeholder="Presentación" (keydown.enter)="$event.preventDefault()" #tpres>
+              id="tpres" name="tpres" placeholder="Presentación" (keydown.enter)="$event.preventDefault()" #tpres>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltedemmmi">Edemas MMII</span>
               <input type="text" [formControl]="myForm.controls['tedemmmi']" formControlName="tedemmmi" class="form-control"
-              id="tedemmmi" placeholder="Edemas MMII" (keydown.enter)="$event.preventDefault()" #tedemmmi>
+              id="tedemmmi" name="tedemmmi" placeholder="Edemas MMII" (keydown.enter)="$event.preventDefault()" #tedemmmi>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltobse">Observaciones</span>
               <input type="text" [formControl]="myForm.controls['tobse']" formControlName="tobse" class="form-control"
-              id="tobse" placeholder="Observaciones" (keydown.enter)="$event.preventDefault()" #tobse>
+              id="tobse" name="tobse" placeholder="Observaciones" (keydown.enter)="$event.preventDefault()" #tobse>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" id="ltsato">SATO2</span>
               <input type="number" [formControl]="myForm.controls['tsato']" formControlName="tsato" class="form-control"
-              id="tsato" placeholder="SATO2" (keydown.enter)="$event.preventDefault()" #tsato>
+              id="tsato" name="tsato" placeholder="SATO2" (keydown.enter)="$event.preventDefault()" #tsato>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="input-group">
               <span class="input-group-text" >Próxima cita</span>
                 <input type="text" [formControl]="myForm.controls['tproxcita']" readonly formControlName="tproxcita" class="form-control"
-                  id="tproxcita" placeholder="Próxima cita" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d5="ngbDatepicker" >
+                  id="tproxcita" name="tproxcita" placeholder="Próxima cita" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d5="ngbDatepicker" 
+                  (click)="d5.toggle()">
                 <div class="input-group-append">
                   <div class="input-group-text" (click)="d5.toggle()">
                     <i class="fa fa-calendar" style="cursor: pointer;"></i>
@@ -260,7 +224,8 @@
             <div class="input-group">
               <span class="input-group-text" >Inicio descanso prenatal</span>
                 <input type="text" [formControl]="myForm.controls['tfechinicdescprenata']" readonly formControlName="tfechinicdescprenata" class="form-control"
-                  id="tfechinicdescprenata" placeholder="Inicio descanso prenatal" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d6="ngbDatepicker" >
+                  id="tfechinicdescprenata" name="tfechinicdescprenata" placeholder="Inicio descanso prenatal" (keydown.enter)="$event.preventDefault()" ngbDatepicker #d6="ngbDatepicker" 
+                  (click)="d6.toggle()">
                 <div class="input-group-append">
                   <div class="input-group-text" (click)="d6.toggle()">
                     <i class="fa fa-calendar" style="cursor: pointer;"></i>

@@ -57,7 +57,7 @@
               <span *ngIf="menuSubItem.badge && menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
             </a>
             <a appSidebarAnchorToggle routerLink="{{menuSubItem.path}}"
-              *ngIf="menuSubItem.submenu.length === 0 && !menuSubItem.isExternalLink && (menuSubItem.perfil==sesion.aprobador || menuSubItem.perfil==sesion.rrhh || menuSubItem.perfil == 1)">
+              *ngIf="menuSubItem.submenu.length === 0 && !menuSubItem.isExternalLink">
               <i [ngClass]="[menuSubItem.icon]"></i>
               <span class="menu-title">{{menuSubItem.title | translate }}</span>
               <span *ngIf="menuSubItem.badge && menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>

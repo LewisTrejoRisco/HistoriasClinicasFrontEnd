@@ -11,6 +11,33 @@
             <div class="card-content">
                 <div class="card-body">
                     <div class="row">
+                      
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <div *ngIf="flagformtransaccion && !modalDataRese?.transaccion.tfechatenmedi" 
+                          class="help-block mt-1 text-danger"> 
+                            <i class="ft-alert-circle align-middle"></i> Fecha Emisión
+                          </div>
+                          <div class="input-group">
+                            <span class="input-group-text" >Fecha de atención:</span>
+                                  
+                            <input type="text" 
+                                  [(ngModel)]="modalDataRese?.transaccion.tfechatenmedi"
+                                  class="form-control" 
+                                  id="tfechatenmedi" 
+                                  name="tfechatenmedi"
+                                  placeholder="dd/mm/yyyy" 
+                                  (keydown.enter)="$event.preventDefault()"
+                                  ngbDatepicker #d2="ngbDatepicker" 
+                                  required
+                                  (click)="d2.toggle()"
+                                  [style.cursor]="'pointer'">
+                            <div class="input-group-append">
+                              <div class="input-group-text" (click)="d2.toggle()">
+                                <i class="fa fa-calendar" id="fechemis" style="cursor: pointer;"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div *ngIf="flagformtransaccion && !modalDataRese?.transaccion.tdiagnostico" 
                             class="help-block mt-1 text-danger"> 
@@ -137,7 +164,7 @@
               <p class="grey"></p>
               <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
               [rows]="listatenmedi" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
-                <ngx-datatable-column name="Fecha Atención" prop="tfechregi" [width]="80"></ngx-datatable-column>
+                <ngx-datatable-column name="Fecha Atención" prop="tfechatenmedi" [width]="80"></ngx-datatable-column>
                 <ngx-datatable-column name="Diagnostico" prop="tdiagnostico" [width]="80"></ngx-datatable-column>
                 <ngx-datatable-column name="Descripción" prop="tdescatenmedi" [width]="80"></ngx-datatable-column>
                 <ngx-datatable-column name="Descanso Médico" prop="tdescmedi" [width]="50"></ngx-datatable-column>

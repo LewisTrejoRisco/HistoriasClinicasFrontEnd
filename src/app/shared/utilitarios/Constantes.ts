@@ -1,10 +1,9 @@
 // export const URL_END_POINT_BASE = 'http://localhost:8080';
-export const URL_END_POINT_BASE = 'http://sicb.nettalco.com.pe/GestionHumanaWS'
+export const URL_END_POINT_BASE = 'https://sicb.nettalco.com.pe/GestionHumanaWS'
 //Auth
-export const OBTENERTOKEN = "http://sicb.nettalco.com.pe/recursosHumanosWS/servicio/obtenerToken";
-export const AUTENTICAR = "http://sicb.nettalco.com.pe/recursosHumanosWS/servicio/autenticarUsuario";
-export const OBTENERFOTO = "http://sicb.nettalco.com.pe/recursosHumanosWS/servicio/obtenerFotoPersona/"
-export const OBTENERDATOS = "/common/listXColaborador?tcodipers="
+export const OBTENERTOKEN = "https://sicb.nettalco.com.pe/recursosHumanosWS/servicio/obtenerToken";
+export const AUTENTICAR = "https://sicb.nettalco.com.pe/recursosHumanosWS/servicio/autenticarUsuario";
+export const OBTENERFOTO = "https://sicb.nettalco.com.pe/recursosHumanosWS/servicio/obtenerFotoPersona/"
 export const OBTENERDATOSBASICOS = "/autenticar/obtenerDatosBasicos?pCodipers="
 
 //Comunes
@@ -89,8 +88,13 @@ export const NUMERO_CUENTA_CARGO = "1930454658003"
 // export const URL_END_POINT_BASE_2 = 'http://128.0.17.3:8082';
 // export const URL_END_POINT_BASE_2 = 'http://128.0.1.208:8082';
 // export const URL_END_POINT_BASE_2 = '/api';
-export const URL_END_POINT_BASE_2 = '/api';
+export const URL_END_POINT_BASE_2 = '/historiasclinicasbackend';
+// export const URL_END_POINT_BASE_2 = 'http://128.0.1.210/historiasclinicasbackend';
+// export const URL_END_POINT_BASE_COMMON = 'http://128.0.1.210/commonbackend';
+export const URL_END_POINT_BASE_COMMON = '/commonbackend';
 // INFORMACION PERSONAL
+// export const OBTENERDATOS = "/common/listXColaborador?tcodipers="
+export const FINDBYTCODIPERS = '/common/findByTcodipers';
 export const LISTARXCODIGO = '/common/listXColaborador';
 export const LISTARXNOMBRE = '/common/listColaByTnomb';
 // ANTECEDENTES PATOLOGICOS

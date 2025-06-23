@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef, Injectable } from '@angular/core';
 import {
   ColumnMode,
   DatatableComponent,
   SelectionType
 } from '@swimlane/ngx-datatable';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateParserFormatter, NgbDatepickerI18n, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { SolicitarService } from 'app/shared/services/solicitar.service';
 import { DELETE_ATENCIONMEDICA, INSERT_ATENCIONMEDICA, LISTAR_ATENCIONMEDICA, UPDATE_ATENCIONMEDICA } from 'app/shared/utilitarios/Constantes';
@@ -12,13 +12,73 @@ import { forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { CancelarModalComponent } from '../cancelarModal/cancelar-modal.component';
+const I18N_VALUES = {
+  es: {
+    weekdays: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
+    months: [
+      'Enero', 'Febrer', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septie', 'Octubr', 'Noviem', 'Diciem'
+    ],
+  }
+};
+
+// @Injectable()
+// export class CustomDatepickerI18n extends NgbDatepickerI18n {
+
+//   getWeekdayShortName(weekday: number): string {
+//     return I18N_VALUES.es.weekdays[weekday - 1];
+//   }
+//   getMonthShortName(month: number): string {
+//     return I18N_VALUES.es.months[month - 1];
+//   }
+//   getMonthFullName(month: number): string {
+//     return this.getMonthShortName(month);
+//   }
+//   getDayAriaLabel(date: NgbDateStruct): string {
+//     return `${date.day}-${date.month}-${date.year}`;
+//   }
+// }
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10),
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date
+      ? this.formatNumberToTwoDigits(date.day) + this.DELIMITER + this.formatNumberToTwoDigits(date.month) + this.DELIMITER + date.year
+      : '';
+  }
+
+  formatNumberToTwoDigits(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
+}
 
 @Component({
   selector: 'app-atencion-medica',
   templateUrl: './atencion-medica.component.html',
   styleUrls: ['./atencion-medica.component.scss', '../../../assets/sass/libs/datatables.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [SolicitarService]
+  providers: [
+    {
+      provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter
+    },
+    SolicitarService
+  ]
 })
 export class AtencionMedicaComponent implements OnInit {
 
@@ -35,6 +95,7 @@ export class AtencionMedicaComponent implements OnInit {
   @ViewChild('modalRegistrar') modalRegistrar: TemplateRef<any>;
   flagformtransaccion: boolean = false;
   flagAtencionMedica: boolean = false;
+  d2: any;
 
   constructor(private modalService: NgbModal, 
     private solicitarService: SolicitarService,
@@ -45,8 +106,25 @@ export class AtencionMedicaComponent implements OnInit {
     this.sesion = JSON.parse(this.authService.userSesion);
     this.usuarioSolicitar = JSON.parse(this.authService.userUsuarioExpediente);
     if (this.usuarioSolicitar != null) {
-      this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
+      this.codigoTrabajador = this.usuarioSolicitar.tcodipersresu;
+      this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+        (imagen: Blob) =>{
+          this.createImageFromBlob(imagen);
+        }, error=> {
+          console.log(error)
+        }
+      )
       this.listarAtencionMedica();
+    }
+  }
+  // Convierte la imagen Blob en una URL para mostrarla en la vista
+  createImageFromBlob(image: Blob): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.usuarioSolicitar.p_foto = reader.result as string;
+    }, false);
+    if (image) {
+      reader.readAsDataURL(image);
     }
   }
 
@@ -57,8 +135,15 @@ export class AtencionMedicaComponent implements OnInit {
   }
 
   selecUsuario(selectedItem: any) {
-    this.codigoTrabajador = selectedItem.tcodipers;
+    // this.codigoTrabajador = selectedItem.tcodipers;
     this.authService.guardarUsuarioExpediente(JSON.stringify(this.usuarioSolicitar))
+    this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+      (imagen: Blob) =>{
+        this.createImageFromBlob(imagen);
+      }, error=> {
+        console.log(error)
+      }
+    )
   }
 
   likePersXNomb(tnombcomp: string) {
@@ -78,17 +163,24 @@ export class AtencionMedicaComponent implements OnInit {
   }
 
   onKeycodigo(event: any) {
-    if(event.target.value.length >= 7) {
+    if(event.target.value.length >= 4) {
       this.likePersXCodigo(event.target.value.toUpperCase());
     }
   }
 
   likePersXCodigo(tcodiusua: string) {
-    this.solicitarService.listXColaborador("000" + tcodiusua).subscribe(
+    this.solicitarService.listXColaborador(tcodiusua).subscribe(
       resp => {
         this.usuarioSolicitar = resp;
-        this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
+        // this.codigoTrabajador = this.usuarioSolicitar.tcodipers;
         this.authService.guardarUsuarioExpediente(JSON.stringify(this.usuarioSolicitar))
+        this.authService.obtenerFoto(this.usuarioSolicitar.tcodipers, JSON.parse(this.authService.userToken).token).subscribe(
+          (imagen: Blob) =>{
+            this.createImageFromBlob(imagen);
+          }, error=> {
+            console.log(error)
+          }
+        )
       },
       error => {
           console.log("error:", error.message)
@@ -135,17 +227,27 @@ export class AtencionMedicaComponent implements OnInit {
       idatenmedi: null,
       tdiagnostico: null,
       tdescmedi: null,
-      tdescatenmedi: null
+      tdescatenmedi: null,
+      tfechatenmedi: null
     }
     this.handleTransaccion('Registrar', 'Registrar', this.transaccion);
   }
 
   updateTransaccion(row: any) {
+    let tfechatenmedi = null;
+    if(row.tfechatenmedi.split('/').length == 3){
+      tfechatenmedi = {
+        "year": parseInt(row.tfechatenmedi.split('/')[2]),
+        "month": parseInt(row.tfechatenmedi.split('/')[1]),
+        "day": parseInt(row.tfechatenmedi.split('/')[0])
+      };
+    }
     this.transaccion = {
       idatenmedi: row.idatenmedi,
       tdiagnostico: row.tdiagnostico,
       tdescmedi: row.tdescmedi,
-      tdescatenmedi: row.tdescatenmedi
+      tdescatenmedi: row.tdescatenmedi,
+      tfechatenmedi: tfechatenmedi
     }
     this.handleTransaccion('Actualizar', 'Actualizar', this.transaccion);
   }
@@ -170,11 +272,14 @@ export class AtencionMedicaComponent implements OnInit {
   };
   
   registrar(form: NgForm): void {
-    console.log(this.modalDataRese.transaccion);
     this.flagformtransaccion = true;
     if (form.invalid) {
       return;
     }
+    let tfechatenmedi: any = this.modalDataRese.transaccion.tfechatenmedi == null 
+                      ? null : this.modalDataRese.transaccion.tfechatenmedi.day
+                      + '/' + this.modalDataRese.transaccion.tfechatenmedi.month
+                      + '/' + this.modalDataRese.transaccion.tfechatenmedi.year;
     let objeinsert = {
       idatenmedi: this.modalDataRese.transaccion.idatenmedi,
       tcodipers: this.usuarioSolicitar.tcodipers,
@@ -182,10 +287,10 @@ export class AtencionMedicaComponent implements OnInit {
       tdiagnostico: this.modalDataRese.transaccion.tdiagnostico,
       tdescmedi: this.modalDataRese.transaccion.tdescmedi,
       tdescatenmedi: this.modalDataRese.transaccion.tdescatenmedi,
-      tcodipersregi: this.sesion.tcodipers
+      tcodipersregi: this.sesion.tcodipers,
+      tfechatenmedi: tfechatenmedi
     };
 
-    console.log(objeinsert)
     if (objeinsert.idatenmedi == null) {
       this.metoRegistro(objeinsert);
     } else {

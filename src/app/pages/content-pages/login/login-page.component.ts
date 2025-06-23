@@ -53,30 +53,39 @@ export class LoginPageComponent {
         fullScreen: true
       });
     
-    // this.authService.obtenerToken().subscribe(
-    //   resp => {
-        // this.token = resp;
-        // this.authService.guardarToken(JSON.stringify(resp))
-        // this.authService.autenticarUsuario(this.loginForm.value.username, this.loginForm.value.password, this.token.token).subscribe(
-          // resp => {
-            // this.user = resp;
+    this.authService.obtenerToken().subscribe(
+      resp => {
+        this.token = resp;
+        this.authService.guardarToken(JSON.stringify(resp))
+        this.authService.autenticarUsuario(this.loginForm.value.username, this.loginForm.value.password, this.token.token).subscribe(
+          resp => {
+            this.user = resp;
             // console.log('autenticarUsuario');
             // console.log(this.user);
-            // if (this.user.p_mensavis == '0'){
+            if (this.user.p_mensavis.toString() === '0'){
               this.authService.signupUser(this.loginForm.value.username)
                 .subscribe(res => {
                   this.sesion = res;
-                  console.log('signupUser');
-                  console.log(this.sesion);
+                  // console.log('signupUser');
+                  // console.log(this.sesion);
+                  if (this.sesion.tcodipues.toString() === '100848') {
+                    this.authService.guardarSesion(JSON.stringify(this.sesion));
+                    // this.router.navigate(['/paciente/ficha']); // quitar cuando se active el token
+                    this.authService.obtenerFoto(this.sesion.tcodipers, this.token.token).subscribe(
+                      (imagen: Blob) =>{
+                        this.createImageFromBlob(imagen);
+                      }, error=> {
+                        console.log(error)
+                      }
+                    )
+                  } else {
+                    Swal.fire(
+                      'Error',
+                      'Sin acceso',
+                      'error'
+                    );
+                  }
                   
-                  this.router.navigate(['/paciente/ficha']); // quitar cuando se active el token
-                  // this.authService.obtenerFoto(this.sesion.tcodipers, this.token.token).subscribe(
-                  //   (imagen: Blob) =>{
-                  //     this.createImageFromBlob(imagen);
-                  //   }, error=> {
-                  //     console.log(error)
-                  //   }
-                  // )
                 }, error => {
                   console.log(error.message)
                   Swal.fire(
@@ -86,32 +95,32 @@ export class LoginPageComponent {
                   );
                 }
               )
-          //   } else {
-          //     Swal.fire(
-          //       'Error',
-          //       'error al autenticar colaborador, vuelva a digitar el usuario o clave',
-          //       'error'
-          //     );
-          //   }
-          // },
-          // error => {
-          //   Swal.fire(
-          //     'Error',
-          //     'error al autenticar colaborador, vuelva a digitar el usuario o clave',
-          //     'error'
-          //   );
-          // }
-        // )
-      // }, 
-    //   error => {
-    //     //console.log("Error: " + error.message)
-    //     Swal.fire(
-    //       'Error',
-    //       'error al generar Token:'+ error.message,
-    //       'error'
-    //     );
-    //   }
-    // );
+            } else {
+              Swal.fire(
+                'Error',
+                'error al autenticar colaborador, vuelva a digitar el usuario o clave',
+                'error'
+              );
+            }
+          },
+          error => {
+            Swal.fire(
+              'Error',
+              'error al autenticar colaborador, vuelva a digitar el usuario o clave',
+              'error'
+            );
+          }
+        )
+      }, 
+      error => {
+        //console.log("Error: " + error.message)
+        Swal.fire(
+          'Error',
+          'error al generar Token:'+ error.message,
+          'error'
+        );
+      }
+    );
       // .catch((err) => {
       //   this.isLoginFailed = true;
       //   this.spinner.hide();
