@@ -202,7 +202,7 @@ export class AtencionMedicaComponent implements OnInit {
       next: ({ listatenmedi }) => {
         this.listatenmedi = listatenmedi;
         this.flagAtencionMedica = true
-        console.log(this.listatenmedi)
+        // console.log(this.listatenmedi)
       },
       error: error => {
         Swal.fire(
@@ -382,7 +382,7 @@ export class AtencionMedicaComponent implements OnInit {
       let objRechazar = {
         idatenmedi: row.idatenmedi
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       
     forkJoin({
       response: this.solicitarService.eliminar(path,objRechazar)

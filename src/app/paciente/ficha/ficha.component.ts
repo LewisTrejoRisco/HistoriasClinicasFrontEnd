@@ -223,7 +223,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.listAlerXPers(tcodipers, 1).subscribe(
       resp => {
         this.listAlerXPers = resp;
-        console.log(this.listAlerXPers);
+        // console.log(this.listAlerXPers);
 
       },
       error => {
@@ -240,7 +240,7 @@ export class FichaComponent implements OnInit {
   listarAntePatoXPers(tcodipers:string){
     this.solicitarService.listarAntePatoXPers(tcodipers).subscribe(
       resp => {
-        console.log(resp);
+        // console.log(resp);
         this.listAntePatoXPers = resp;
       },
       error => {
@@ -257,8 +257,8 @@ export class FichaComponent implements OnInit {
   listEMOXPersAnteOcup(tcodipers:string){
     this.solicitarService.listEMOXPersAnteOcup(tcodipers).subscribe(
       resp => {
-        console.log(tcodipers + ": EMO Actualizar" );
-        console.log(resp);
+        // console.log(tcodipers + ": EMO Actualizar" );
+        // console.log(resp);
         this.objeEMOXPersAO = resp;
         this.listEMOXPersLastAnteOcup(this.objeEMOXPersAO.idhistemoxperslast)
       },
@@ -276,7 +276,7 @@ export class FichaComponent implements OnInit {
   listEMOXPersLastAnteOcup(idhistemoxpers:number){
     this.solicitarService.findByIdHistEmoXPers(idhistemoxpers, this.tstatusActive).subscribe(
       resp => {
-        console.log(resp);
+        // console.log(resp);
         this.listEmoXPersLast = resp;
       },
       error => {
@@ -293,7 +293,7 @@ export class FichaComponent implements OnInit {
   listAccidentesLaborales(tcodipers:string){
     this.solicitarService.listAccidentesLaborales(tcodipers).subscribe(
       resp => {
-        console.log(resp);
+        // console.log(resp);
         this.listAccidenteLaboral = resp;
       },
       error => {
@@ -310,7 +310,7 @@ export class FichaComponent implements OnInit {
   listVacunasXPersona(tcodipers:string){
     this.solicitarService.listVacunasXPers(tcodipers).subscribe(
       resp => {
-        console.log(resp);
+        // console.log(resp);
         this.listVacuna = resp;
       },
       error => {
@@ -325,7 +325,7 @@ export class FichaComponent implements OnInit {
   }
 
   listGestante(tcodipers:string){
-    console.log(this.usuarioSolicitar)
+    // console.log(this.usuarioSolicitar)
     let path = LISTAR_GESTANTE;
     let param = "?tcodipers=" + tcodipers;
     forkJoin({
@@ -349,7 +349,7 @@ export class FichaComponent implements OnInit {
 // ANTECEDENTE PATOLOGICO
 
   modalAgregarAntePato(tipo: any, row:any) {
-    console.log(row)
+    // console.log(row)
     let tfechulticont = null;
     let tflagcontrol = null;
     let tdescantepato = null;
@@ -415,7 +415,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.agreAntePatoXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listarAntePatoXPers(this.usuarioSolicitar.tcodipers);
           Swal.fire({
@@ -448,7 +448,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.actuAntePatoXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listarAntePatoXPers(this.usuarioSolicitar.tcodipers);
           Swal.fire({
@@ -481,7 +481,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.borrAntePatoXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listarAntePatoXPers(this.usuarioSolicitar.tcodipers);
           Swal.fire({
@@ -520,7 +520,7 @@ export class FichaComponent implements OnInit {
         tcodipers: user.tcodipers,
         idantepato: user.idantepato
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       this.solicitarService.borrAntePatoXPers(objRechazar).subscribe(
         resp => {
           //console.log(resp)
@@ -557,9 +557,9 @@ export class FichaComponent implements OnInit {
     let tfechrese = null;
     let tflagentrresu = null;
     // row = this.objeEMOXPersAO;
-    console.log(row)
-    console.log(this.objeEMOXPersAO)
-    console.log(this.listEmoXPersLast)
+    // console.log(row)
+    // console.log(this.objeEMOXPersAO)
+    // console.log(this.listEmoXPersLast)
     if (row != null) {
       if(row.tfechiniclast != null) {
         if(row.tfechiniclast.split('/').length == 3){
@@ -615,7 +615,7 @@ export class FichaComponent implements OnInit {
                                         tflagentrresu: tflagentrresu
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
+      // console.log(result)
       let objeInse = null;
       objeInse = {
         idhistemoxpers: row == null ? null : row.idhistemoxperslast,
@@ -657,7 +657,7 @@ export class FichaComponent implements OnInit {
     }).subscribe({
       next: ({ resp }) => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           if(objeInse.idaptitudemo != 1) {
             objeActu.idhistemoxpers = response.primaryKey;
@@ -689,7 +689,7 @@ export class FichaComponent implements OnInit {
     }).subscribe({
       next: ({ resp }) => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           if(objeInse.idaptitudemo != 1) {
             objeActu.idhistemoxpers = response.primaryKey;
@@ -719,7 +719,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.borrAnteOcupXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listEmoXPers(this.usuarioSolicitar.tcodipers);
           this.listEMOXPersAnteOcup(this.usuarioSolicitar.tcodipers);
@@ -757,8 +757,8 @@ export class FichaComponent implements OnInit {
     let idaptitudemo = null;
     let tfechalimite = null;
     let tstatus = null;
-    console.log(row)
-    console.log(this.objeEMOXPersAO.idaptitudemo)
+    // console.log(row)
+    // console.log(this.objeEMOXPersAO.idaptitudemo)
     if (row != null) {
       if(row.tfechalimite != null){
         if(row.tfechalimite.split('/').length == 3){
@@ -801,7 +801,7 @@ export class FichaComponent implements OnInit {
                                         tstatus: tstatus
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
+      // console.log(result)
       let objeInse = null;
       objeInse = {
         idhistemoxpers: row == null ? this.objeEMOXPersAO.idhistemoxperslast : row.idhistemoxpers,
@@ -811,7 +811,7 @@ export class FichaComponent implements OnInit {
         tcodipersregi: this.sesion.tcodipers,
         tcodipersactu: this.sesion.tcodipers
       }
-      console.log(objeInse)
+      // console.log(objeInse)
       // this.actuAnteOcupXPers(objeActu);
       if (tipo == 0) {
         this.agreAnteOcupAptiXPers(objeInse);
@@ -827,7 +827,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.agreAnteOcupAptiXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listEMOXPersLastAnteOcup(response.primaryKey.split("-")[0])
           Swal.fire({
@@ -861,7 +861,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.actuAnteOcupAptiXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listEmoXPers(this.usuarioSolicitar.tcodipers);
           this.listEMOXPersAnteOcup(this.usuarioSolicitar.tcodipers);
@@ -896,7 +896,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.borrAnteOcupAptiXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listEMOXPersLastAnteOcup(response.primaryKey.split("-")[0])
           Swal.fire({
@@ -926,7 +926,7 @@ export class FichaComponent implements OnInit {
   }
 
   modalEliminarAnteOcupAptiXPers(user: any){
-    console.log(user)
+    // console.log(user)
     const modalRef = this.modalService.open(CancelarModalComponent);
     modalRef.componentInstance.titulo = 'la aptitud emo'; // should be the id
     modalRef.componentInstance.data = { motivo: 'el motivo es' }; // should be the data
@@ -936,7 +936,7 @@ export class FichaComponent implements OnInit {
         idhistemoxpers: user.idhistemoxpers,
         idrestriccion: user.idrestriccion
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       this.solicitarService.borrAnteOcupAptiXPers(objRechazar).subscribe(
         resp => {
           //console.log(resp)
@@ -1015,7 +1015,7 @@ export class FichaComponent implements OnInit {
                                         tobservaciones: tobservaciones
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
+      // console.log(result)
       let objeInse = null;
       objeInse = {
         idaccilabo: row == null ? null : row.idaccilabo,
@@ -1032,7 +1032,7 @@ export class FichaComponent implements OnInit {
         tcodipersregi: this.sesion.tcodipers,
         tcodipersactu: this.sesion.tcodipers
       }
-      console.log(objeInse)
+      // console.log(objeInse)
       if (tipo == 0) {
         this.agreAcciLaboXPers(objeInse);
       } else {
@@ -1047,7 +1047,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.agreAcciLaboXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listAccidentesLaborales(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1080,7 +1080,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.actuAcciLaboXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listAccidentesLaborales(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1113,7 +1113,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.borrAcciLaboXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listAccidentesLaborales(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1151,7 +1151,7 @@ export class FichaComponent implements OnInit {
       let objRechazar = {
         idaccilabo: user.idaccilabo
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       this.solicitarService.borrAcciLaboXPers(objRechazar).subscribe(
         resp => {
           //console.log(resp)
@@ -1200,7 +1200,7 @@ export class FichaComponent implements OnInit {
                                         tfechapli: tfechapli
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
+      // console.log(result)
       let objeInse = null;
       objeInse = {
         tcodipers: this.usuarioSolicitar.tcodipers,
@@ -1210,7 +1210,7 @@ export class FichaComponent implements OnInit {
         tcodipersregi: this.sesion.tcodipers,
         tcodipersactu: this.sesion.tcodipers
       }
-      console.log(objeInse)
+      // console.log(objeInse)
       if (tipo == 0) {
         this.agreVacunaXPersona(objeInse);
       } else {
@@ -1225,7 +1225,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.agreVacunasXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listVacunasXPersona(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1258,7 +1258,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.actuVacunasXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listVacunasXPersona(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1291,7 +1291,7 @@ export class FichaComponent implements OnInit {
     this.solicitarService.borrVacunasXPers(objeInse).subscribe(
       resp => {
         let response: any = resp;
-        console.log(response)
+        // console.log(response)
         if (response.httpcode == 200 ) {
           this.listVacunasXPersona(this.usuarioSolicitar.tcodipers)
           Swal.fire({
@@ -1329,7 +1329,7 @@ export class FichaComponent implements OnInit {
       let objRechazar = {
         idpersxvacu: user.idpersxvacu
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       this.solicitarService.borrVacunasXPers(objRechazar).subscribe(
         resp => {
           //console.log(resp)
@@ -1592,7 +1592,7 @@ export class FichaComponent implements OnInit {
         tfechinicdescprenata: result.tfechinicdescprenata == null ? null : result.tfechinicdescprenata.day + '/' + result.tfechinicdescprenata.month + '/' + result.tfechinicdescprenata.year,
         tcodipersregi: this.sesion.tcodipers
       }
-      console.log(objeInse)
+      // console.log(objeInse)
       if (tipo == 0) {
         this.metoRegistro(objeInse);
       } else {
@@ -1686,7 +1686,7 @@ export class FichaComponent implements OnInit {
       let objRechazar = {
         tcodigestante: user.tcodigestante
       }
-      console.log(objRechazar);
+      // console.log(objRechazar);
       let path = DELETE_GESTANTE;
       this.solicitarService.eliminar(path,objRechazar).subscribe(
         resp => {

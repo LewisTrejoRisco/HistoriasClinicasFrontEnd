@@ -65,6 +65,7 @@ export class LoginPageComponent {
             if (this.user.p_mensavis.toString() === '0'){
               this.authService.signupUser(this.loginForm.value.username)
                 .subscribe(res => {
+                  // console.log(res);
                   this.sesion = res;
                   // console.log('signupUser');
                   // console.log(this.sesion);

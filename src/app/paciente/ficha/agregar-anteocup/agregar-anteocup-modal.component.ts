@@ -104,7 +104,7 @@ export class AgregarAnteOcupModalComponent implements OnInit{
     });
     this.profileImage = this.myForm.value.documento;
     this.profileImageInf = this.myForm.value.documentoinf;
-    console.log(this.myForm.value)
+    // console.log(this.myForm.value)
 
     
     forkJoin({
@@ -142,7 +142,7 @@ export class AgregarAnteOcupModalComponent implements OnInit{
   // }
 
   submitForm() {
-    console.log(this.myForm.value)
+    // console.log(this.myForm.value)
     this.modalFormSubmitted = true;
     if (this.myForm.invalid) {
       return;
@@ -204,7 +204,7 @@ export class AgregarAnteOcupModalComponent implements OnInit{
         } 
       },
       error => {
-          console.log("error:", error.message)
+          // console.log("error:", error.message)
           Swal.fire(
             'Error',
             'Alerta:'+ error.message,
@@ -231,7 +231,7 @@ export class AgregarAnteOcupModalComponent implements OnInit{
     this.solicitarService.agreEspecialidad(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idespecialidad = objeResp.primaryKey;
@@ -309,7 +309,7 @@ export class AgregarAnteOcupModalComponent implements OnInit{
     this.solicitarService.agreRestriccion(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idrestriccion = objeResp.primaryKey;

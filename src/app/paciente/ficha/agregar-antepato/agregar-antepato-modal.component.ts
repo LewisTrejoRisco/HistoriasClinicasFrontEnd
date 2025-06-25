@@ -132,7 +132,7 @@ export class AgregarAntepatoModalComponent implements OnInit{
     this.solicitarService.agreAntePato(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idantepato = objeResp.primaryKey;
@@ -199,7 +199,7 @@ export class AgregarAntepatoModalComponent implements OnInit{
     this.solicitarService.agreAntePato(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp)
+        // console.log(objeResp)
         const newItem = {idantepato: objeResp.primaryKey, tdescantepato: name};
         this.listantepato.push(newItem);
         Swal.fire({

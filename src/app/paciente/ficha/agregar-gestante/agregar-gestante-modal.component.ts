@@ -129,7 +129,7 @@ export class AgregarGestanteModalComponent implements OnInit{
   
 
   listGestante(){
-    console.log(this.myForm.value.usuarioSolicitar.tcodipers)
+    // console.log(this.myForm.value.usuarioSolicitar.tcodipers)
     let tcodipers = this.myForm.value.usuarioSolicitar.tcodipers;
     let path = LISTAR_GESTANTE;
     let param = "?tcodipers=" + tcodipers;

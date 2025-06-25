@@ -2,13 +2,14 @@ import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { SolicitarService } from 'app/shared/services/solicitar.service';
-import { REPORTACCIDENTE, REPORTEMOOBSERVADA, REPORTEMOXVENCER } from 'app/shared/utilitarios/Constantes';
+import { REPORTACCIDENTE, REPORTATENCIONMEDICA, REPORTEMOOBSERVADA, REPORTEMOXVENCER } from 'app/shared/utilitarios/Constantes';
 import { forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { ReportAdapter } from 'app/shared/utilitarios/ReportAdapter.class';
 import { ReportAdapterEMOObservada } from 'app/shared/utilitarios/ReportAdapterEMOObservada.class';
 import { ReportAdapterAccidente } from 'app/shared/utilitarios/ReportAdapterAccidente.class';
+import { ReportAdapterAtencionMedica } from 'app/shared/utilitarios/ReportAdapterAtencionMedica.class';
 
 @Component({
   selector: 'app-reporte',
@@ -30,6 +31,7 @@ export class ReporteComponent implements OnInit {
   transaccion: any;
   // ACCIDENTE LABORALES
   tranaaci: any;
+  // ATENCION MEDICA
   d3: any;
   d4: any;
 
@@ -40,9 +42,10 @@ export class ReporteComponent implements OnInit {
 
   ngOnInit(): void {
     this.sesion = JSON.parse(this.authService.userSesion);
-    console.log(this.sesion)
+    // console.log(this.sesion)
     this.createFormEMO();
     this.createFormAcci();
+    this.createFormAtenMedi();
   }
 
   modalDataRese: {
@@ -73,12 +76,30 @@ export class ReporteComponent implements OnInit {
     this.modalDataRepo = { titulo, action, tranaaci};
   }
 
+  modalDataAtenMedi: {
+    titulo: string,
+    action: string;
+    transaccion: any
+  };
+
+  handleAtenMedi(titulo: string, action: string, transaccion: any): void {
+    this.modalDataAtenMedi = { titulo, action, transaccion};
+  }
+
   createFormAcci() {
     this.tranaaci = {
       tfechinic: null,
       tfechfin: null
     }
     this.handleTranRepo('Reporte', 'Reporte', this.tranaaci);
+  }
+
+  createFormAtenMedi() {
+    let transaccion: any = {
+      tfechinic: null,
+      tfechfin: null
+    }
+    this.handleAtenMedi('Reporte', 'Reporte', transaccion);
   }
 
   reportEMO(form: NgForm): void {
@@ -148,7 +169,7 @@ export class ReporteComponent implements OnInit {
     if(this.modalDataRepo.tranaaci.tfechfin != null){
       tfechfin = this.modalDataRepo.tranaaci.tfechfin.day + '/' + this.modalDataRepo.tranaaci.tfechfin.month + '/' + this.modalDataRepo.tranaaci.tfechfin.year;
     }
-    console.log(this.modalDataRepo.tranaaci)
+    // console.log(this.modalDataRepo.tranaaci)
     let path = REPORTACCIDENTE;
     let param = '?tfechinic='+tfechinic+'&tfechfin='+tfechfin;
     if (tfechinic != null && tfechfin != null) {
@@ -161,6 +182,53 @@ export class ReporteComponent implements OnInit {
           const headers = ['ID', 'Fecha Accidente', 'Codigo Persona', 'Diagnostico', 'Clasificación', 'Referencia', 'Descanso Médico', 'Restricción', 'Indicaciones', 'Observaciones', 'Unidad Funcional'];
           const report = new ReportAdapterAccidente(respuesta);
           this.solicitarService.generateReporMovitWithAdapter(headers,report.data, 'Reporte_accidente.xlsx');
+            Swal.fire({
+              title: 'Exito',
+              text: respuesta.message,
+              icon: 'success',
+              timer: 1000, 
+              showConfirmButton: false,
+            })
+        },
+        error: error => {
+          Swal.fire(
+            'Error',
+            'Error al registrar: ' + error.message,
+            'error'
+          );
+        }
+      });
+    } else {
+      Swal.fire(
+        'Error',
+        'Se debe llenar la fecha inicio y fin',
+        'error'
+      );
+    }
+  }
+
+  reportAtencionMedica(form: NgForm): void {
+    let tfechinic = null;
+    let tfechfin = null;
+    if(this.modalDataAtenMedi.transaccion.tfechinic != null){
+      tfechinic = this.modalDataAtenMedi.transaccion.tfechinic.day + '/' + this.modalDataAtenMedi.transaccion.tfechinic.month + '/' + this.modalDataAtenMedi.transaccion.tfechinic.year;
+    }
+    if(this.modalDataAtenMedi.transaccion.tfechfin != null){
+      tfechfin = this.modalDataAtenMedi.transaccion.tfechfin.day + '/' + this.modalDataAtenMedi.transaccion.tfechfin.month + '/' + this.modalDataAtenMedi.transaccion.tfechfin.year;
+    }
+    // console.log(this.modalDataAtenMedi.transaccion)
+    let path = REPORTATENCIONMEDICA;
+    let param = '?tfechinic='+tfechinic+'&tfechfin='+tfechfin;
+    if (tfechinic != null && tfechfin != null) {
+      forkJoin({
+        response: this.solicitarService.listar(path, param)
+      }).subscribe({
+        next: ({ response }) => {
+          let respuesta:any = null;
+          respuesta = response;
+          const headers = ['Fecha Atención Médica', 'Documento Identidad', 'Código Persona', 'Edad', 'Apellido Paterno', 'Apellido Materno', 'Nombres', 'Área', 'Diagnóstico'];
+          const report = new ReportAdapterAtencionMedica(respuesta);
+          this.solicitarService.generateReporAtenMeditWithAdapter(headers,report.data, 'Reporte_atencion_medica.xlsx');
             Swal.fire({
               title: 'Exito',
               text: respuesta.message,

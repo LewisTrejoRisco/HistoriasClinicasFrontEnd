@@ -93,7 +93,7 @@ export class AgregarVacunaModalComponent implements OnInit{
       ttotanumedosi: null
                                       }
     modalRef.result.then((result) => {
-      console.log(result)
+      // console.log(result)
       // console.log(objeInse)
       
     // Crea un objeto temporal para mostrar en el select inmediatamente
@@ -119,7 +119,7 @@ export class AgregarVacunaModalComponent implements OnInit{
     this.solicitarService.agreVacunas(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idvacuna = objeResp.primaryKey;
@@ -169,7 +169,7 @@ export class AgregarVacunaModalComponent implements OnInit{
 
   onKeyVacuna(event:any) {
     if(event.target.value.length >= 3) {
-      console.log(event.target.value);
+      // console.log(event.target.value);
       this.likeVacuna(event.target.value);
     }
   }

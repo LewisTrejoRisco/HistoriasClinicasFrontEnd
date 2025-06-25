@@ -153,3 +153,4 @@ export const DELETE_GESTANTE = "/gestante/delete";
 export const REPORTEMOXVENCER = '/reporte/reportemoxvencer';
 export const REPORTEMOOBSERVADA = "/reporte/reportemoobservada";
 export const REPORTACCIDENTE = "/reporte/accidentelaboral";
+export const REPORTATENCIONMEDICA = "/reporte/reportatencionmedica";

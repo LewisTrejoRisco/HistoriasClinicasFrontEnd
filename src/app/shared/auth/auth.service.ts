@@ -140,7 +140,7 @@ export class AuthService {
   }
 
   public obtenerDatos(codiUsua: string) {
-    //console.log(URL_END_POINT_BASE + OBTENERDATOS + codiUsua)
+    //// console.log(URL_END_POINT_BASE + OBTENERDATOS + codiUsua)
         return this.http.get(URL_END_POINT_BASE_COMMON + FINDBYTCODIPERS + "?tcodipers=" + codiUsua)
         .pipe(catchError(e => {
             console.error(' Error al intentar listar. Msg: ' + e.error);
@@ -150,7 +150,7 @@ export class AuthService {
   }
 
   public obtenerFoto(codiUsua: string, token: string ) {
-    console.log(codiUsua + " - " +token)
+    // console.log(codiUsua + " - " +token)
     // console.log(token)
     const headers = new HttpHeaders({
         'Authorization': token

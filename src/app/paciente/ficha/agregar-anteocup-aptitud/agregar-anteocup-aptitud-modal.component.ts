@@ -86,7 +86,7 @@ export class AgregarAnteOcupAptitudModalComponent implements OnInit{
   }
 
   private buildItemForm(item) {
-    console.log(item)
+    // console.log(item)
     this.myForm = this.formBuilder.group({
       tnombespe: [item.tnombespe || null],
       tnombrest: [item.tnombrest || null],
@@ -219,7 +219,7 @@ private updateFormValidators() {
     this.solicitarService.agreEspecialidad(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idespecialidad = objeResp.primaryKey;
@@ -269,7 +269,7 @@ private updateFormValidators() {
     this.solicitarService.agreRestriccion(insert).subscribe(
       resp => {
         var objeResp: any = resp;
-        console.log(objeResp);
+        // console.log(objeResp);
 
         // Actualiza el objeto temporal con el ID recibido del servicio
         tempItem.idrestriccion = objeResp.primaryKey;
@@ -305,7 +305,7 @@ private updateFormValidators() {
     if (this.myForm.invalid) {
       return;
     }
-    console.log(this.myForm.value)
+    // console.log(this.myForm.value)
     // this.myForm.value.documento = this.profileImage;
     this.activeModal.close(this.myForm.value);
   }
