@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormArray, FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
+import { FormArray, FormControl, NgForm, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {
   ColumnMode,
   DatatableComponent,
@@ -17,7 +17,7 @@ import { AgregarAnteOcupAptitudModalComponent } from './agregar-anteocup-aptitud
 import { CancelarModalComponent } from '../cancelarModal/cancelar-modal.component';
 import { forkJoin } from 'rxjs';
 import { AgregarGestanteModalComponent } from './agregar-gestante/agregar-gestante-modal.component';
-import { DELETE_GESTANTE, INSERT_GESTANTE, LISTAR_GESTANTE, UPDATE_GESTANTE } from 'app/shared/utilitarios/Constantes';
+import { DELETE_GESTANTE, INSERT_ALERGIA_PERSONA, INSERT_ALLERGIA, INSERT_GESTANTE, LISTAR_ALLERGIA, LISTAR_GESTANTE, UPDATE_GESTANTE } from 'app/shared/utilitarios/Constantes';
 
 @Component({
   selector: 'app-ficha',
@@ -56,8 +56,15 @@ export class FichaComponent implements OnInit {
   restGestante: any = [];
   // BOOLEAN PARA DETALLE DE PACIENTE
   flagDetalle: boolean = false;
+  transaccion: any;
+  @ViewChild('modalRegistrar') modalRegistrar: TemplateRef<any>;
+  flagformtransaccion: boolean = false;
+  listLikeAlergias: any = [];
+  listalergias: any = [];
+  mostrarLista: boolean = false;
 
-  constructor(private modalService: NgbModal, 
+  constructor(private modal: NgbModal, 
+    private modalService: NgbModal, 
     private solicitarService: SolicitarService,
     private authService: AuthService,
     private formBuilder: UntypedFormBuilder) { }
@@ -344,6 +351,161 @@ export class FichaComponent implements OnInit {
         );
       }
     });
+  }
+  
+
+  createTransaccion() {
+    this.transaccion = {
+      idalergia: 0,
+      tnombaler: null,
+      tdescaler: null
+    }
+    this.handleTransaccion('Registrar Alergia', 'Registrar', this.transaccion);
+  }
+
+  handleTransaccion(titulo: string, action: string, transaccion: any): void {
+    this.modalDataRese = { titulo, action, transaccion};
+    this.modal.open(this.modalRegistrar, { size: 'md' });
+  }
+
+  modalDataRese: {
+    titulo: string,
+    action: string;
+    transaccion: any
+  };
+
+  modalAgregarAlergias() {
+    this.createTransaccion();
+  }
+
+  registrarAlergia(form: NgForm): void {
+    this.flagformtransaccion = true;
+    if (form.invalid) {
+      return;
+    }
+    let path: any = INSERT_ALLERGIA;
+    let objeinsert = {
+      tnombaler: this.modalDataRese.transaccion.tnombaler,
+      tdescaler: this.modalDataRese.transaccion.tdescaler,
+      tcodipersregi: this.sesion.tcodipers//required
+    };
+    forkJoin({
+      response: this.solicitarService.agregar(path, objeinsert)
+    }).subscribe({
+      next: ({ response }) => {
+        let respuesta:any = null;
+        respuesta = response;
+        if(respuesta.httpcode == 200) {
+          // this.iniciarValores();
+          // this.listarAlerXPers(this.usuarioSolicitar.tcodipers);
+
+          this.flagformtransaccion = false;
+          this.registrarAlergiaXPersona(this.usuarioSolicitar.tcodipers, Number(respuesta.primaryKey), this.sesion.tcodipers);
+          // Swal.fire({
+          //   title: 'Exito',
+          //   text: respuesta.message,
+          //   icon: 'success',
+          //   timer: 1000, 
+          //   showConfirmButton: false,
+          // })
+        } else {
+          Swal.fire(
+            'Error',
+            respuesta.message,
+            'error'
+          );
+        }
+      },
+      error: error => {
+        Swal.fire(
+          'Error',
+          'Error al registrar: ' + error.message,
+          'error'
+        );
+      }
+    });
+  }
+  
+  registrarAlergiaXPersona(tcodipers:string, idalergia: number, tcodipersregi: string): void {
+    let path: any = INSERT_ALERGIA_PERSONA;
+    let objeinsert = {
+      tcodipers: tcodipers,
+      idalergia: idalergia,
+      tcodipersregi: tcodipersregi//required
+    };
+    forkJoin({
+      response: this.solicitarService.agregar(path, objeinsert)
+    }).subscribe({
+      next: ({ response }) => {
+        let respuesta:any = null;
+        respuesta = response;
+        if(respuesta.httpcode == 200) {
+          this.listarAlerXPers(this.usuarioSolicitar.tcodipers);
+          this.flagformtransaccion = false;
+          this.modal.dismissAll();
+          Swal.fire({
+            title: 'Exito',
+            text: respuesta.message,
+            icon: 'success',
+            timer: 1000, 
+            showConfirmButton: false,
+          })
+          this.modal.dismissAll();
+        } else {
+          Swal.fire(
+            'Error',
+            respuesta.message,
+            'error'
+          );
+        }
+      },
+      error: error => {
+        Swal.fire(
+          'Error',
+          'Error al registrar: ' + error.message,
+          'error'
+        );
+      }
+    });
+  }
+  
+  onKeyAlergias(event: any) {
+    if(event.target.value.length >= 3) {
+      this.likeAlergias(event.target.value);
+    }
+  }
+
+  likeAlergias(tnombalergia: string) {
+    let path: any = LISTAR_ALLERGIA;
+    let param: any = "?tnombaler="+tnombalergia;
+    this.solicitarService.listar(path, param).subscribe(
+      resp => {
+        this.listalergias = resp;
+        this.mostrarLista = this.listalergias.length > 0;
+        // if (this.listLikeAlergias.length > 0) {
+        //   this.listalergias = this.listLikeAlergias.map(item => ({
+        //     idalergia: item.idalergia,
+        //     tnombaler: item.tnombaler
+        //   }));
+        // } 
+      },
+      error => {
+          // console.log("error:", error.message)
+          Swal.fire(
+            'Error',
+            'Alerta:'+ error.message,
+            'error'
+          );
+      }
+    )
+  }
+
+  onSelect(alergia: any): void {
+    this.modalDataRese.transaccion.idalergia = alergia.idalergia;
+    this.modalDataRese.transaccion.tnombaler = alergia.tnombaler;
+    this.modalDataRese.transaccion.tdescaler = alergia.tdescaler;
+    this.listalergias = [];
+    this.mostrarLista = false;
   }
 
 // ANTECEDENTE PATOLOGICO

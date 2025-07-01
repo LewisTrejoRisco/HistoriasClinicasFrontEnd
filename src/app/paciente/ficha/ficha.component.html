@@ -1,4 +1,63 @@
-<div class="row match-height">
+
+    <ng-template #modalRegistrar let-close="close">
+        <div class="modal-header">
+        <h5 class="modal-title">{{ modalDataRese?.titulo }}</h5>
+        <!-- <h5 class="modal-title">Archivo de Accionista</h5> -->
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        
+        <form #companiaForm="ngForm" (ngSubmit)="registrarAlergia(companiaForm)">
+            <div class="modal-body">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group" style="position: relative;">
+                        <label for="tnombaler">Nombre Alergia</label>
+                        
+                        <input type="text"
+                               class="form-control"
+                               (keyup)="onKeyAlergias($event)"
+                               [(ngModel)]="modalDataRese?.transaccion.tnombaler"
+                               id="tnombaler"
+                               name="tnombaler"
+                               autocomplete="off"
+                               required>
+                      
+                        <ul *ngIf="mostrarLista"
+                            class="list-group"
+                            style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                          
+                          <li *ngFor="let alergia of listalergias"
+                              (click)="onSelect(alergia)"
+                              class="list-group-item list-group-item-action"
+                              style="cursor: pointer;">
+                            {{ alergia.tnombaler }}
+                          </li>
+                        </ul>
+                      </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div *ngIf="flagformtransaccion && !modalDataRese?.transaccion.tdescaler" 
+                    class="help-block mt-1 text-danger"> 
+                        <i class="ft-alert-circle align-middle"></i> Descripción es requerido
+                    </div>
+                    <div class="form-group">
+                        <label for="tdescaler">Descripción Alergia</label>
+                        <input type="text" 
+                            class="form-control" 
+                            id="tdescaler"
+                            name="tdescaler"
+                            [(ngModel)]="modalDataRese?.transaccion.tdescaler"
+                            required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer taskboard-modal-footer">
+                <button class="btn btn-outline-secondary" >{{ modalDataRese?.action }}</button>
+            </div>
+        </form>
+    </ng-template>
+    <div class="row match-height">
     <div class="col-xl-12 col-lg-12">
       <div class="card">
         <div class="card-content">
@@ -63,7 +122,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-12 col-lg-12">
+    <!-- <div class="row"> -->
         <div *ngIf="flagDetalle">
             <!-- Descripcion del colaborador -->
             <div class="col-xs-12 col-md-12 col-xl-12 col-lg-12">
@@ -153,7 +212,7 @@
                                             <select id="basic-form-6" name="interested" class="form-control font-small-1">
                                                 <option *ngFor="let alergia of listAlerXPers" 
                                                         value="{{alergia.idalergia}}" 
-                                                        selected disabled>{{alergia.tnombaler}}</option>
+                                                        >{{alergia.tnombaler}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -163,55 +222,61 @@
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <!-- ALergias -->
-                
-                <!-- Antecedentes Patológicos -->
-                <div class="col-xs-12 col-md-8">
-                    <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
-                        <!-- <div class="col-xs-12" *ngIf="usuarioSolicitar!=null"> -->
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-header font-small-1">
-                                    <label class="font-small-2">Antecedentes Patológicos</label>
-                                    <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarAntePato(0, null)" >Agregar</button>
-                                </div>
-                                <div class="card-body font-small-1">
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12">
-                                            <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
-                                            [rows]="listAntePatoXPers" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
-                                                <ngx-datatable-column name="Descripcion" prop="tdescantepato" [width]="80"></ngx-datatable-column>
-                                                <ngx-datatable-column name="Controlado" prop="tflagcontrol" [width]="50">
-                                                    <ng-template let-status="value" ngx-datatable-cell-template>
-                                                    <div class="badge badge-pill"
-                                                        [ngClass]="{'bg-light-warning': status == '5', 'bg-light-success':status == '1', 'bg-light-danger':status == '0' , 'bg-light-primary':status == '4' }">
-                                                        {{ status == 1 ? "Controlado" : "No controlado" }}
-                                                    </div>
-                                                    </ng-template>
-                                                </ngx-datatable-column>
-                                                <ngx-datatable-column name="Ultimo Control" prop="tfechulticont" [width]="80"></ngx-datatable-column>
-                                                <ngx-datatable-column name="# Control" prop="tcanttotacont" [width]="80"></ngx-datatable-column>
-                                                <ngx-datatable-column name="Observación" prop="tobservacion" [width]="80"></ngx-datatable-column>
-                                                
-                                                <ngx-datatable-column name="Acción" [width]="100">
-                                                    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
-                                                    <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
-                                                    <i class="ft-edit text-primary cursor-pointer mr-2"
-                                                    (click)="modalAgregarAntePato(1, row)"></i>
-                                                    <i class="ft-x text-primary cursor-pointer"
-                                                    (click)="modalEliminar(row)"></i>
-                                                    </ng-template>
-                                                </ngx-datatable-column>
-                                            </ngx-datatable>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- <div class="row"> -->
+            <!-- ALergias -->
+            <div class="col-xs-12 col-md-4">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-footer font-small-1">
+                            <!-- <label class="font-small-2">Alergias</label> -->
+                            <button type="button" class="d-inline-block btn btn-secondary" (click)="modalAgregarAlergias()" > Registrar Alergias</button>
                         </div>
-                    <!-- </form> -->
+                    </div>
                 </div>
             </div>
+            <!-- Antecedentes Patológicos -->
+            <div class="col-xs-12 col-md-8">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-header font-small-1">
+                            <label class="font-small-2">Antecedentes Patológicos</label>
+                            <button type="button" class="d-inline-block btn btn-secondary mr-1 float-right" (click)="modalAgregarAntePato(0, null)" >Agregar</button>
+                        </div>
+                        <div class="card-body font-small-1">
+                            <!-- <div class="row"> -->
+                                <div class="col-xl-12 col-md-12">
+                                    <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap font-small-2 tabla-de-datos" [columnMode]="ColumnMode.force" 
+                                    [rows]="listAntePatoXPers" [rowHeight]="30" [limit]="10" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+                                        <ngx-datatable-column name="Descripcion" prop="tdescantepato" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Controlado" prop="tflagcontrol" [width]="50">
+                                            <ng-template let-status="value" ngx-datatable-cell-template>
+                                            <div class="badge badge-pill"
+                                                [ngClass]="{'bg-light-warning': status == '5', 'bg-light-success':status == '1', 'bg-light-danger':status == '0' , 'bg-light-primary':status == '4' }">
+                                                {{ status == 1 ? "Controlado" : "No controlado" }}
+                                            </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Ultimo Control" prop="tfechulticont" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="# Control" prop="tcanttotacont" [width]="80"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Observación" prop="tobservacion" [width]="80"></ngx-datatable-column>
+                                        
+                                        <ngx-datatable-column name="Acción" [width]="100">
+                                            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                            <!-- <i class="ft-eye text-primary cursor-pointer mr-2"></i> -->
+                                            <i class="ft-edit text-primary cursor-pointer mr-2"
+                                            (click)="modalAgregarAntePato(1, row)"></i>
+                                            <i class="ft-x text-primary cursor-pointer"
+                                            (click)="modalEliminar(row)"></i>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
             <!-- Antecedentes Ocupacionales -->
             <div class="col-xs-12 col-md-12">
                 <!-- <form [formGroup]="myForm" (ngSubmit)="submitForm()" *ngIf="myForm"> -->
@@ -450,5 +515,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </div>

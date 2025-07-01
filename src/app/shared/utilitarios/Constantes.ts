@@ -154,3 +154,7 @@ export const REPORTEMOXVENCER = '/reporte/reportemoxvencer';
 export const REPORTEMOOBSERVADA = "/reporte/reportemoobservada";
 export const REPORTACCIDENTE = "/reporte/accidentelaboral";
 export const REPORTATENCIONMEDICA = "/reporte/reportatencionmedica";
+// ALERGIAS
+export const INSERT_ALLERGIA = "/allergy/insert";
+export const LISTAR_ALLERGIA = "/allergy/listbyParam";
+export const INSERT_ALERGIA_PERSONA = '/persXAler/insert';
