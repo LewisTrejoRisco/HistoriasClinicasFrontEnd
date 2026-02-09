@@ -339,6 +339,7 @@ export class SolicitarService {
       // Crear un mapeo entre las cabeceras y las propiedades de los datos
       const headerToPropertyMap = {
         'Fecha Atención Médica':'tfechatenmedi', 
+        'Sede Atención':'tsedeaten', 
         'Documento Identidad':'tnumedocuiden', 
         'Código Persona':'tcodipers',  
         'Edad':'tedad',  
@@ -357,15 +358,15 @@ export class SolicitarService {
       }));
 
       const firstRowHeight = 40; // Altura de la primera fila para la imagen y el título
-      worksheet.mergeCells('B1:H1'); // Fusionamos las celdas B1 hasta H1 para el título
+      worksheet.mergeCells('B1:I1'); // Fusionamos las celdas B1 hasta H1 para el título
       worksheet.getCell('B1').value = 'FORMATO DE ATENCIÓN MÉDICA DIARIA'; 
       worksheet.getCell('B1').style = {
           font: { bold: true, size: 16 },
           alignment: { horizontal: 'center', vertical: 'middle', wrapText: true }
       };
       // worksheet.mergeCells('B1:H1'); // Fusionamos las celdas B1 hasta H1 para el título
-      worksheet.getCell('I1').value = 'REVISIÓN 001\nPÁGINA 01 DE 01\nCÓDIGO FSO-005'; 
-      worksheet.getCell('I1').style = {
+      worksheet.getCell('J1').value = 'REVISIÓN 001\nPÁGINA 01 DE 01\nCÓDIGO FSO-005'; 
+      worksheet.getCell('J1').style = {
           font: { bold: true, size: 12 },
           alignment: { horizontal: 'center', vertical: 'middle', wrapText: true }
       };

@@ -34,6 +34,7 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   resizeTimeout;
   sesion: any;
   privilegio: string = '2';
+  rolesUsuario: any ;
 
   constructor(
     private router: Router,
@@ -52,7 +53,17 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.sesion = JSON.parse(this.authService.userSesion);
-    this.menuItems = ROUTES;
+    this.rolesUsuario = this.sesion.roles; // ['ADMIN'] o ['EJECUTOR']
+    this.menuItems = ROUTES
+        .filter(menu =>
+          menu.perfil.some(p => this.rolesUsuario.includes(p))
+        )
+        .map(menu => ({
+          ...menu,
+          submenu: menu.submenu.filter(sub =>
+            sub.perfil.some(p => this.rolesUsuario.includes(p))
+          )
+        }));
   }
 
   ngAfterViewInit() {
@@ -95,7 +106,16 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     else if (this.config.layout.menuPosition === "Side") { // Vertical Menu{
-      this.menuItems = ROUTES;
+      this.menuItems = ROUTES
+        .filter(menu =>
+          menu.perfil.some(p => this.rolesUsuario.includes(p))
+        )
+        .map(menu => ({
+          ...menu,
+          submenu: menu.submenu.filter(sub =>
+            sub.perfil.some(p => this.rolesUsuario.includes(p))
+          )
+        }));;
     }
 
 

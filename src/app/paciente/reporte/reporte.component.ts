@@ -226,7 +226,7 @@ export class ReporteComponent implements OnInit {
         next: ({ response }) => {
           let respuesta:any = null;
           respuesta = response;
-          const headers = ['Fecha Atención Médica', 'Documento Identidad', 'Código Persona', 'Edad', 'Apellido Paterno', 'Apellido Materno', 'Nombres', 'Área', 'Diagnóstico'];
+          const headers = ['Fecha Atención Médica', 'Sede Atención', 'Documento Identidad', 'Código Persona', 'Edad', 'Apellido Paterno', 'Apellido Materno', 'Nombres', 'Área', 'Diagnóstico'];
           const report = new ReportAdapterAtencionMedica(respuesta);
           this.solicitarService.generateReporAtenMeditWithAdapter(headers,report.data, 'Reporte_atencion_medica.xlsx');
             Swal.fire({

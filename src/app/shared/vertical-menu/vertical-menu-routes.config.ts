@@ -30,12 +30,21 @@ export const ROUTES: RouteInfo[] = [
   //     { path: '/movilidad/aprobar', title: 'Aprobar', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '2' },
   //     { path: '/movilidad/generar', title: 'Generar TXT', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '3' },
   //   ]
-  // },
+  // },,
   {
-    path: '', title: 'Paciente', icon: 'ft-briefcase', class: 'has-sub', badge: '', badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1', isExternalLink: false, perfil: '', submenu: [
-      { path: '/paciente/ficha', title: 'Expediente', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
-      { path: '/paciente/atencionmedica', title: 'Atención Médica', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
-      { path: '/paciente/reporte', title: 'Reportes', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
+    path: '', title: 'Administración', icon: 'ft-briefcase', class: 'has-sub', badge: '', badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1', isExternalLink: false, perfil: ['ADMIN'], submenu: [
+      { path: '/admin/usuarios', title: 'Auditoría', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: ['ADMIN'] },
+      // { path: '/paciente/atencionmedica', title: 'Atención Médica', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
+      // { path: '/paciente/reporte', title: 'Reportes', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
+      // { path: '/paciente/actiPreve', title: 'Actividades Periódicas', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
+      // { path: '/paciente/actiPreve', title: 'Actividades Reporte', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
+    ]
+  },
+  {
+    path: '', title: 'Paciente', icon: 'ft-briefcase', class: 'has-sub', badge: '', badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1', isExternalLink: false, perfil: ['EJECUTOR'], submenu: [
+      { path: '/paciente/ficha', title: 'Expediente', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: ['EJECUTOR'] },
+      { path: '/paciente/atencionmedica', title: 'Atención Médica', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: ['EJECUTOR'] },
+      { path: '/paciente/reporte', title: 'Reportes', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: ['EJECUTOR'] },
       // { path: '/paciente/actiPreve', title: 'Actividades Periódicas', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
       // { path: '/paciente/actiPreve', title: 'Actividades Reporte', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], perfil: '1' },
     ]

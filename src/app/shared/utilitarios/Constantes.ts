@@ -86,14 +86,17 @@ export const NUMERO_CUENTA_CARGO = "1930454658003"
 
 
 // export const URL_END_POINT_BASE_2 = 'http://128.0.17.3:8082';
-// export const URL_END_POINT_BASE_2 = 'http://128.0.1.208:8082';
+// export const URL_END_POINT_BASE_2 = 'http://localhost:8082';
 // export const URL_END_POINT_BASE_2 = '/api';
 export const URL_END_POINT_BASE_2 = '/historiasclinicasbackend';
 // export const URL_END_POINT_BASE_2 = 'http://128.0.1.210/historiasclinicasbackend';
+// export const URL_END_POINT_BASE_2 = 'http://localhost:8082';
 // export const URL_END_POINT_BASE_COMMON = 'http://128.0.1.210/commonbackend';
+// export const URL_END_POINT_BASE_COMMON = 'http://localhost:8081';
 export const URL_END_POINT_BASE_COMMON = '/commonbackend';
 // INFORMACION PERSONAL
 // export const OBTENERDATOS = "/common/listXColaborador?tcodipers="
+export const GETROLES = '/common/getRoles';
 export const FINDBYTCODIPERS = '/common/findByTcodipers';
 export const LISTARXCODIGO = '/common/listXColaborador';
 export const LISTARXNOMBRE = '/common/listColaByTnomb';
@@ -158,3 +161,10 @@ export const REPORTATENCIONMEDICA = "/reporte/reportatencionmedica";
 export const INSERT_ALLERGIA = "/allergy/insert";
 export const LISTAR_ALLERGIA = "/allergy/listbyParam";
 export const INSERT_ALERGIA_PERSONA = '/persXAler/insert';
+// USUARIO
+export const LISTAR_USUARIO = "/usuario/findAll";
+export const LISTAR_PUESTO = "/usuario/puestoFindAll";
+export const LISTAR_ROL = "/usuario/rolFindAll";
+export const INSERT_USUARIO = "/usuario/insert";
+export const ACTUALIZAR_USUARIO = "/usuario/update";
+export const DELETE_USUARIO = "/usuario/delete";

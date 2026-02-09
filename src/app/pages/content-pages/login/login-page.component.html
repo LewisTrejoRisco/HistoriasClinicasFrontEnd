@@ -11,7 +11,7 @@
                 <img src="assets/img/gallery/login.png" alt="" class="img-fluid bottom-img" width="300" height="230">
               </div>
               <div class="col-lg-6 col-12 px-4 py-3">
-                <h6 class="float-right"><span>(V1.0.22)</span></h6>
+                <h6 class="float-right"><span>(V1.0.24)</span></h6>
                 <h4 class="mb-2 card-title">Historias Clínicas </h4>
                 <p>Bienvenido, por favor ingrese sus datos.</p>
                 <ngb-alert type="light-danger" class="mb-2" *ngIf="isLoginFailed" (close)="isLoginFailed = false">
@@ -33,15 +33,20 @@
                       class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Campo requerido
                     </div>
                   </div>
-                  <!-- <div class="d-sm-flex justify-content-between mb-3 font-small-2">
-                    <div class="remember-me mb-2 mb-sm-0">
-                      <div class="checkbox auth-checkbox">
-                        <input type="checkbox" formControlName="rememberMe" class="form-control" id="rememberMe">
-                        <label for="rememberMe"><span class="font-small-2 mb-3 font-weight-normal">Remember Me</span></label>
-                      </div>
-                    </div>
-                    <a [routerLink]="['/pages/forgotpassword']">Forgot Password?</a>
-                  </div> -->
+                  
+                  <div class="form-group">
+                    <select class="form-control" name="sedeaten" formControlName="sedeaten" required
+                    [ngClass]="{ 'is-invalid': loginFormSubmitted && lf.sedeaten.invalid, 'is-valid': loginFormSubmitted && !lf.sedeaten.invalid }">
+                      <option value="" disabled selected>
+                        Seleccione una sede de atención
+                      </option>
+                      <option *ngFor="let sede of sedes" [value]="sede.tcodisede">
+                        {{ sede.tdescsede }}
+                      </option>
+                    </select>
+                    <div *ngIf="loginFormSubmitted && (lf.sedeaten.invalid || lf.sedeaten.errors?.required)"
+                      class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Campo requerido</div>
+                  </div>
                   <div class="d-flex justify-content-between flex-sm-row flex-column">
                     <!-- <a [routerLink]="['/pages/register']" class="btn bg-light-primary mb-2 mb-sm-0">Register</a> -->
                     <a  class="btn btn-secondary" (click)="onSubmit()">Entrar</a>
@@ -49,6 +54,7 @@
                 </form>
                 <hr>
                 <div class="d-flex justify-content-between align-items-center">
+                  <ngx-spinner></ngx-spinner>
                   <!-- <h6 class="text-primary m-0">Or Login With</h6>
                   <ngx-spinner></ngx-spinner>
                   <div class="login-options">

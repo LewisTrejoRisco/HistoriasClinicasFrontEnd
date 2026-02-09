@@ -86,5 +86,9 @@ export const Full_ROUTES: Routes = [
   {
     path: 'paciente',
     loadChildren: () => import('../../paciente/paciente.module').then(m => m.PacienteModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('../../administracion/admin.module').then(m => m.AdminModule)
   }
 ];

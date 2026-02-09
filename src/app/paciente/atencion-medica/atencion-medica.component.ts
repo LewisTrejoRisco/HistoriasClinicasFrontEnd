@@ -22,25 +22,6 @@ const I18N_VALUES = {
   }
 };
 
-// @Injectable()
-// export class CustomDatepickerI18n extends NgbDatepickerI18n {
-
-//   getWeekdayShortName(weekday: number): string {
-//     return I18N_VALUES.es.weekdays[weekday - 1];
-//   }
-//   getMonthShortName(month: number): string {
-//     return I18N_VALUES.es.months[month - 1];
-//   }
-//   getMonthFullName(month: number): string {
-//     return this.getMonthShortName(month);
-//   }
-//   getDayAriaLabel(date: NgbDateStruct): string {
-//     return `${date.day}-${date.month}-${date.year}`;
-//   }
-// }
-/**
- * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
- */
 @Injectable()
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
   readonly DELIMITER = '/';
@@ -251,14 +232,6 @@ export class AtencionMedicaComponent implements OnInit {
     }
     this.handleTransaccion('Actualizar', 'Actualizar', this.transaccion);
   }
-  // int idatenmedi;
-  //   String tcodipers;
-  //   String tdescunidfunc;
-  //   String tdiagnostico;
-  //   int tdescmedi;
-  //   String tdescatenmedi;
-  //   String tcodipersregi;
-  //   String tfechregi;
 
   handleTransaccion(titulo: string, action: string, transaccion: any): void {
     this.modalDataRese = { titulo, action, transaccion};
@@ -288,7 +261,8 @@ export class AtencionMedicaComponent implements OnInit {
       tdescmedi: this.modalDataRese.transaccion.tdescmedi,
       tdescatenmedi: this.modalDataRese.transaccion.tdescatenmedi,
       tcodipersregi: this.sesion.tcodipers,
-      tfechatenmedi: tfechatenmedi
+      tfechatenmedi: tfechatenmedi,
+      tsedeaten: this.sesion.tsedeaten
     };
 
     if (objeinsert.idatenmedi == null) {

@@ -20,10 +20,21 @@ export class LoginPageComponent {
   user: any = null;
   sesion: any = null;
   imagenUrl: string;
+  sedes = [
+    { 
+      tcodisede: "1",
+      tdescsede: 'Cercado'
+    },
+    { 
+      tcodisede: "2",
+      tdescsede: 'Vulcano'
+    }
+  ];
 
   loginForm = new UntypedFormGroup({
     username: new UntypedFormControl('', [Validators.required]),
-    password: new UntypedFormControl('', [Validators.required])
+    password: new UntypedFormControl('', [Validators.required]),
+    sedeaten: new UntypedFormControl('', [Validators.required])
     // rememberMe: new UntypedFormControl(true)
   });
 
@@ -60,18 +71,13 @@ export class LoginPageComponent {
         this.authService.autenticarUsuario(this.loginForm.value.username, this.loginForm.value.password, this.token.token).subscribe(
           resp => {
             this.user = resp;
-            // console.log('autenticarUsuario');
-            // console.log(this.user);
             if (this.user.p_mensavis.toString() === '0'){
               this.authService.signupUser(this.loginForm.value.username)
                 .subscribe(res => {
-                  // console.log('signupUser');
                   this.sesion = res;
-                  // console.log('signupUser');
-                  // console.log(this.sesion);
-                  if (this.sesion.tcodipues.toString() === '100848') {
+                  if (this.sesion.menserro == null) {
+                    this.sesion.tsedeaten = this.loginForm.value.sedeaten;
                     this.authService.guardarSesion(JSON.stringify(this.sesion));
-                    // this.router.navigate(['/paciente/ficha']); // quitar cuando se active el token
                     this.authService.obtenerFoto(this.sesion.tcodipers, this.token.token).subscribe(
                       (imagen: Blob) =>{
                         this.createImageFromBlob(imagen);
@@ -79,16 +85,17 @@ export class LoginPageComponent {
                         console.log(error)
                       }
                     )
-                  } else {
+                  }
+                  else {
+                    this.spinner.hide();
                     Swal.fire(
                       'Error',
-                      'Sin acceso',
+                      this.sesion.menserro,
                       'error'
                     );
                   }
-                  
                 }, error => {
-                  console.log(error.message)
+                  this.spinner.hide();
                   Swal.fire(
                     'Error',
                     'error al obtener datos del colaborador',
@@ -97,6 +104,7 @@ export class LoginPageComponent {
                 }
               )
             } else {
+              this.spinner.hide();
               Swal.fire(
                 'Error',
                 'error al autenticar colaborador, vuelva a digitar el usuario o clave',
@@ -105,6 +113,7 @@ export class LoginPageComponent {
             }
           },
           error => {
+            this.spinner.hide();
             Swal.fire(
               'Error',
               'error al autenticar colaborador, vuelva a digitar el usuario o clave',
@@ -114,7 +123,7 @@ export class LoginPageComponent {
         )
       }, 
       error => {
-        //console.log("Error: " + error.message)
+        this.spinner.hide();
         Swal.fire(
           'Error',
           'error al generar Token:'+ error.message,
@@ -135,14 +144,33 @@ export class LoginPageComponent {
     reader.addEventListener('load', () => {
       this.imagenUrl = reader.result as string;
       this.sesion.p_foto = this.imagenUrl
-      //console.log(this.sesion)
+      // console.log(this.sesion)
       this.authService.guardarSesion(JSON.stringify(this.sesion));
       this.spinner.hide();
-      this.router.navigate(['/paciente/ficha']);
+      this.redirigirSegunRol(this.sesion.roles)
+      // this.router.navigate(['/paciente/ficha']);
     }, false);
     if (image) {
       reader.readAsDataURL(image);
     }
   }
+
+  private redirigirSegunRol(roles: string[]) {
+    if (!roles || roles.length === 0) {
+      // fallback de seguridad
+      this.router.navigate(['/login']);
+      return;
+    }
+    const esAdmin = roles.includes('ADMIN');
+    const esEjecutor = roles.includes('EJECUTOR');
+    // ADMIN PURO
+    if (esAdmin && !esEjecutor) {
+      this.router.navigate(['/admin/usuarios']);
+      return;
+    }
+    // CUALQUIER CASO QUE TENGA EJECUTOR
+    this.router.navigate(['/paciente/ficha']);
+  }
+
 
 }

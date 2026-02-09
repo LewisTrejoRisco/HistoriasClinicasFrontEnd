@@ -8,6 +8,7 @@ export interface iReporte {
     tapelpate?: string,
     tapelmate?: string,
     tnombpila?: string,
+    tsedeaten?: string,
     tdescunidfunc?: string,
     tdiagnostico?: string
 }
@@ -24,6 +25,7 @@ export class ReportAdapterAtencionMedica {
                 tapelpate: report.tapelpate,
                 tapelmate: report.tapelmate,
                 tnombpila: report.tnombpila,
+                tsedeaten: report.tsedeaten,
                 tdescunidfunc: report.tdescunidfunc,
                 tdiagnostico: report.tdiagnostico
             }

@@ -6,6 +6,7 @@ export interface ReporteAtencionMedica {
     tapelpate?: string,
     tapelmate?: string,
     tnombpila?: string,
+    tsedeaten?: string,
     tdescunidfunc?: string,
     tdiagnostico?: string
 }
